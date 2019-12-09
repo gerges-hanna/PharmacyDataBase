@@ -5,6 +5,8 @@
  */
 package pharmacydatabase;
 
+import Models.DBConnection;
+
 /**
  *
  * @author Gerges hanna FCI-H
@@ -16,7 +18,8 @@ public class PharmacyDataBase {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        System.out.println("welcome");
+        DBConnection d=new DBConnection();
+        d.makeConnection();
     }
     
 }
