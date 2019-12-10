@@ -19,7 +19,7 @@ public class PharmacyDataBase {
     public static void main(String[] args) {
         // TODO code application logic here
         DBConnection d=new DBConnection();
-        d.makeConnection();
+        //d.insertSellReview("afa", "sefs", 103, 30.5,10, 8, "12/10/2019","2:53:00",2);
     }
     
 }

@@ -5,6 +5,9 @@
  */
 package GUI;
 
+import Models.DBConnection;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author John
@@ -14,8 +17,49 @@ public class SaleReview extends javax.swing.JFrame {
     /**
      * Creates new form SaleReview
      */
+    private void TableShow()
+    {
+        DBConnection connect=new DBConnection();
+        connect.select("SellReview","");
+        String [] column={"OPeration_ID","Parcode","Med_Nam","price","Retail","Quantity","Emp_ID","Sell_Date","Sell_Time","ID_Med"};
+       DefaultTableModel model=new DefaultTableModel();
+       model.addColumn(column[0]);
+       model.addColumn(column[1]);
+       model.addColumn(column[2]);
+       model.addColumn(column[3]);
+       model.addColumn(column[4]);
+       model.addColumn(column[5]);
+       model.addColumn(column[6]);
+       model.addColumn(column[7]);
+       model.addColumn(column[8]);
+       model.addColumn(column[9]);
+       String []row=new String[10];
+       //"OPeration_ID","Parcode","Med_Nam","price","Retail",
+       //"Quantity","Emp_ID","Sell_Date","Sell_Time","ID_Med"};
+       
+        for (int i = 0; i < Models.ReviewModel.listReview.size(); i++) {
+            row[0]=Models.ReviewModel.listReview.get(i).getOP_ID()+"";
+            row[1]=Models.ReviewModel.listReview.get(i).getParcode()+"";
+            row[2]=Models.ReviewModel.listReview.get(i).getMed_Name();
+            row[3]=Models.ReviewModel.listReview.get(i).getPrice()+"";
+            row[4]=Models.ReviewModel.listReview.get(i).getRetail()+"";
+            row[5]=Models.ReviewModel.listReview.get(i).getQuantity_M()+"";
+            row[6]=Models.ReviewModel.listReview.get(i).getEmp_ID()+"";
+            row[7]=Models.ReviewModel.listReview.get(i).getSell_Date()+"";
+            row[8]=Models.ReviewModel.listReview.get(i).getSell_Time();
+            row[9]=Models.ReviewModel.listReview.get(i).getID_Med()+"";
+            model.addRow(row);
+        }
+ 
+        
+        
+       tab.setModel(model);
+        
+    }
+    
     public SaleReview() {
         initComponents();
+        //TableShow();
     }
 
     /**
@@ -33,7 +77,7 @@ public class SaleReview extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tab = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
@@ -60,8 +104,8 @@ public class SaleReview extends javax.swing.JFrame {
         jButton2.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jButton2.setText("Search");
 
-        jTable1.setBorder(new javax.swing.border.MatteBorder(null));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tab.setBorder(new javax.swing.border.MatteBorder(null));
+        tab.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -72,7 +116,7 @@ public class SaleReview extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tab);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         jLabel2.setText("Total Sales:");
@@ -91,14 +135,9 @@ public class SaleReview extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(229, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 766, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -118,6 +157,14 @@ public class SaleReview extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(205, 205, 205))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -195,7 +242,7 @@ public class SaleReview extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable tab;
     // End of variables declaration//GEN-END:variables
 }
