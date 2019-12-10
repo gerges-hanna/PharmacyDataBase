@@ -20,6 +20,7 @@ public class PharmacyDataBase {
         // TODO code application logic here
         DBConnection d=new DBConnection();
         //d.insertSellReview("afa", "sefs", 103, 30.5,10, 8, "12/10/2019","2:53:00",2);
+        System.out.println("test push from fady");
     }
     
 }
