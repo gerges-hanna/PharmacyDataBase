@@ -152,23 +152,23 @@ public class DBConnection {
             // loop through the result set  
             if(tableName.equalsIgnoreCase("Employee"))
             {
-                while (rs.next()) {  
-                System.out.println(rs.getInt("ID") +  "\t" +   
-                                   rs.getString("EmName") + "\t" +  
-                                   rs.getDouble("salary"));  
+                while (rs.next()) { 
+                    EmployeeModel e=new EmployeeModel(rs.getInt("ID"), rs.getString("EmName"), rs.getDouble("salary"), rs.getString("DB"));
+                    EmployeeModel.listEmployee.add(e);
                 }
             }else if(tableName.equalsIgnoreCase("Login"))
             {
-                while (rs.next()) {  
-                System.out.println(rs.getInt("ID") +  "\t" +   
-                                   rs.getString("Email") + "\t" +  
-                                   rs.getString("Login_Password"));  
+                while (rs.next()) {
+                    EmployeeModel e=new EmployeeModel(rs.getInt("ID")
+                            ,rs.getString("Email"), rs.getString("Login_Password"));  
+                    EmployeeModel.listLogin.add(e);
                 }
             }else if(tableName.equalsIgnoreCase("phone"))
             {
+                
                 while (rs.next()) {  
-                System.out.println(rs.getInt("ID") +  "\t" +   
-                                   rs.getString("phoneNumber"));  
+                    EmployeeModel e=new EmployeeModel(rs.getInt("ID"), rs.getString("phoneNumber"));
+                    EmployeeModel.listPhone.add(e);
                 }
             }else if(tableName.equalsIgnoreCase("Medicine"))
             {
@@ -204,16 +204,18 @@ public class DBConnection {
             System.out.println(e.getMessage());  
         }  
     }  
-    public void Update(String tableName,String set,String where){
+    public int Update(String tableName,String set,String where){
         String sql="UPDATE "+tableName+" set "+set+" where "+where;
         try {
             makeConnection();
             Statement st=con.createStatement();
             st.executeUpdate(sql);
             con.close();
+            return 1;
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        return 0;
     }
     
 }

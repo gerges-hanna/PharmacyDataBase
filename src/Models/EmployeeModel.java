@@ -5,11 +5,18 @@
  */
 package Models;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Gerges hanna FCI-H
  */
 public class EmployeeModel {
+    public static ArrayList<EmployeeModel> listEmployee=new ArrayList<EmployeeModel>();
+    public static ArrayList<EmployeeModel> listLogin=new ArrayList<EmployeeModel>();
+    public static ArrayList<EmployeeModel> listPhone=new ArrayList<EmployeeModel>();
+    
+    
     //Employee
     private int ID_E;
     private String EmName;
@@ -24,6 +31,33 @@ public class EmployeeModel {
     //Phone
     private int ID_P;
     private String Phone;
+
+    public EmployeeModel() {
+    }
+
+    public EmployeeModel(int ID_P, String Phone) {
+        this.ID_P = ID_P;
+        this.Phone = Phone;
+    }
+
+    public EmployeeModel(int ID_E, String EmName, double Salary, String DB) {
+        this.ID_E = ID_E;
+        this.EmName = EmName;
+        this.Salary = Salary;
+        this.DB = DB;
+    }
+
+    public EmployeeModel(int ID_L, String Email, String Password) {
+        this.ID_L = ID_L;
+        this.Email = Email;
+        this.Password = Password;
+    }
+
+    
+
+    
+    
+    
 
     public int getID_E() {
         return ID_E;
