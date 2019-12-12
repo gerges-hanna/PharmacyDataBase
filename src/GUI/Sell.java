@@ -355,12 +355,12 @@ public class Sell extends javax.swing.JFrame {
             model2.addRow(row);  
          
            }
-        int poos = searchtable.getSelectedRow();
+        /*int poos = searchtable.getSelectedRow();
                      DefaultTableModel model = (DefaultTableModel) searchtable.getModel();
                      int mainq= MedicineModel.dataofmedicine.get(4).getQuantity_M();
                      String sq=prquantity.getText();
                      int ssq=Integer.parseInt(sq);
-                     int result=mainq-ssq;
+                     int result=mainq-ssq;*/
                      
                      /*DBConnection connection=new DBConnection();                     
                      String endgame=Integer.toString(result);
@@ -395,6 +395,9 @@ public class Sell extends javax.swing.JFrame {
                         Float cost=0.0f;
                         int q=0;
                         Float p=0.0f;
+                        int result=0;
+                        int ssq=0;
+                        int mainq;
                         String s=prquantity.getText();
                         String s2=proprice.getText();
                         q=Integer.parseInt(s);
@@ -405,17 +408,17 @@ public class Sell extends javax.swing.JFrame {
                      
                      int pos = searchtable.getSelectedRow();
                      DefaultTableModel model = (DefaultTableModel) searchtable.getModel();
-                     int mainq= MedicineModel.dataofmedicine.get(4).getQuantity_M();
+                     //mainq= MedicineModel.dataofmedicine.get(4).getQuantity_M();
+                     mainq=Models.MedicineModel.dataofmedicine.get(pos).getQuantity_M();
                      String sq=prquantity.getText();
-                     int ssq=Integer.parseInt(sq);
-                     int result=mainq-ssq;
+                     ssq=Integer.parseInt(sq);
+                     result=mainq-ssq;
                      
                      DBConnection connection=new DBConnection();                     
                      String endgame=Integer.toString(result);
                      connection.Update("Medicine","Quantity ="+endgame+"","Parcode ="+par.getText()+"");
                      model.setValueAt(endgame, pos, 4);
                      MedicineModel m=new MedicineModel();
-                     m.setQuantity_M(result);
                     
        
         
