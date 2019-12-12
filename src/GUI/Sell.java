@@ -346,16 +346,37 @@ public class Sell extends javax.swing.JFrame {
 
     private void addprActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addprActionPerformed
         DefaultTableModel model=(DefaultTableModel) listofbuy.getModel();
+        qm();
         Object[] r=new Object[5];
         r[0]=par.getText();
         r[1]=prname.getText();
         r[3]=prquantity.getText();
         r[2]=proprice.getText();
         r[4]=prdata.getText();
+        
+        //String Parcode, String Med_Name, double price, double Retail, int Quantity_M, String EXP
+        MedicineModel medicineModel=new MedicineModel();
+        medicineModel.setParcode(par.getText());
+        medicineModel.setMed_Name(prname.getText());
+        String price=proprice.getText();
+        Float p=Float.valueOf(price);
+        medicineModel.setPrice(p);
+        String qu=prquantity.getText();
+        int q=Integer.parseInt(qu);
+        medicineModel.setQuantity_M(q);
+        medicineModel.setEXP(prdata.getText());
+        Models.MedicineModel.buydata.add(medicineModel);
         model.addRow(r);
         
-        qm();
-
+       /* for (int i = 0; i < Models.MedicineModel.buydata.size(); i++) {
+        System.out.println(MedicineModel.buydata.get(i).getParcode());
+        System.out.println(MedicineModel.buydata.get(i).getMed_Name());
+        System.out.println(MedicineModel.buydata.get(i).getPrice());
+        System.out.println(MedicineModel.buydata.get(i).getQuantity_M());
+        System.out.println(MedicineModel.buydata.get(i).getEXP());
+        }*/
+    
+        
     }//GEN-LAST:event_addprActionPerformed
 
     private void prsearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prsearchActionPerformed
@@ -372,7 +393,10 @@ public class Sell extends javax.swing.JFrame {
 
     private void DeleteboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteboardActionPerformed
            // System.out.println(MedicineModel.buydata.get(1));
-            DefaultTableModel m=(DefaultTableModel) listofbuy.getModel();
+           // DefaultTableModel m=(DefaultTableModel) listofbuy.getModel();
+           dis2();
+           DefaultTableModel model = (DefaultTableModel) listofbuy.getModel();
+           model.setRowCount(0);
             
     }//GEN-LAST:event_DeleteboardActionPerformed
 
@@ -485,6 +509,18 @@ public class Sell extends javax.swing.JFrame {
              
           }
       });
+    }
+    private void dis2()
+    {
+            
+        for (int i = 0; i <MedicineModel.buydata.size(); i++) {
+           
+                      MedicineModel.buydata.remove(i);
+                      
+                       
+        }
+         MedicineModel.buydata.clear();
+        //showdata();
     }
     private void dis()
     {
