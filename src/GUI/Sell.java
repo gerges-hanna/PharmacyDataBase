@@ -5,6 +5,27 @@
  */
 package GUI;
 
+import Models.DBConnection;
+import Models.MedicineModel;
+import static Models.MedicineModel.dataofmedicine;
+import java.awt.PopupMenu;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.TableModel;
+
 /**
  *
  * @author John
@@ -14,8 +35,10 @@ public class Sell extends javax.swing.JFrame {
     /**
      * Creates new form Sell
      */
+   
     public Sell() {
         initComponents();
+        
     }
 
     /**
@@ -27,48 +50,41 @@ public class Sell extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        back = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        proprice = new javax.swing.JLabel();
+        par = new javax.swing.JTextField();
+        prname = new javax.swing.JTextField();
+        prquantity = new javax.swing.JTextField();
+        prdata = new javax.swing.JTextField();
+        addpr = new javax.swing.JButton();
+        clearsearch = new javax.swing.JButton();
+        prsearch = new javax.swing.JButton();
+        resettextfield = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
+        listofbuy = new javax.swing.JTable();
+        buypr = new javax.swing.JButton();
+        removepr = new javax.swing.JButton();
+        Deleteboard = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        searchtable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
         setSize(new java.awt.Dimension(1200, 700));
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton1.setText("Back");
+        back.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        back.setText("Back");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 17)); // NOI18N
         jLabel1.setText("Parcode");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 17)); // NOI18N
         jLabel2.setText("Name");
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 17)); // NOI18N
-        jLabel3.setText("Category");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 17)); // NOI18N
         jLabel4.setText("Quantity");
@@ -79,213 +95,447 @@ public class Sell extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 17)); // NOI18N
         jLabel6.setText("Price:");
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 17)); // NOI18N
-        jLabel7.setText("0.0");
+        proprice.setFont(new java.awt.Font("Tahoma", 1, 17)); // NOI18N
+        proprice.setText("0.0");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        par.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                parActionPerformed(evt);
             }
         });
 
-        jTextField5.addActionListener(new java.awt.event.ActionListener() {
+        prquantity.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField5ActionPerformed(evt);
+                prquantityActionPerformed(evt);
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton2.setText("ADD");
-
-        jButton3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton3.setText("Clear");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        prdata.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                prdataActionPerformed(evt);
             }
         });
 
-        jButton4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton4.setText("Search");
+        addpr.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        addpr.setText("ADD");
+        addpr.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addprActionPerformed(evt);
+            }
+        });
 
-        jButton5.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
-        jButton5.setText("RESET");
+        clearsearch.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        clearsearch.setText("Clear");
+        clearsearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearsearchActionPerformed(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        prsearch.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        prsearch.setText("Search");
+        prsearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                prsearchActionPerformed(evt);
+            }
+        });
+
+        resettextfield.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
+        resettextfield.setText("RESET");
+        resettextfield.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resettextfieldActionPerformed(evt);
+            }
+        });
+
+        listofbuy.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Parcode", "Med_name", "price", "Retail", "Quantity", "EXP"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(listofbuy);
 
-        jButton6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton6.setText("Buy");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        buypr.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        buypr.setText("Buy");
+        buypr.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                buyprActionPerformed(evt);
             }
         });
 
-        jButton7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton7.setText("Remove");
+        removepr.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        removepr.setText("Remove");
+        removepr.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeprActionPerformed(evt);
+            }
+        });
 
-        jButton8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton8.setText("Delete Board");
+        Deleteboard.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        Deleteboard.setText("Delete Board");
+        Deleteboard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeleteboardActionPerformed(evt);
+            }
+        });
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        searchtable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
-
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+        searchtable.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                searchtableAncestorAdded(evt);
             }
-        ));
-        jScrollPane3.setViewportView(jTable3);
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        jScrollPane2.setViewportView(searchtable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
+                .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2)
                     .addComponent(jLabel1)
-                    .addComponent(jLabel3)
                     .addComponent(jLabel5)
                     .addComponent(jLabel6)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jButton2)
-                        .addComponent(jLabel4)))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton3)
-                        .addGap(27, 27, 27)
-                        .addComponent(jButton4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
-                        .addComponent(jButton5))
-                    .addComponent(jLabel7)
-                    .addComponent(jTextField1)
-                    .addComponent(jTextField2)
-                    .addComponent(jTextField3)
-                    .addComponent(jTextField4)
-                    .addComponent(jTextField5))
+                    .addComponent(jLabel4)
+                    .addComponent(clearsearch))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton6)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(proprice)
+                                .addGap(0, 232, Short.MAX_VALUE))
+                            .addComponent(prdata)
+                            .addComponent(par)
+                            .addComponent(prname)
+                            .addComponent(prquantity)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(prsearch)
+                        .addGap(18, 18, 18)
+                        .addComponent(resettextfield)
+                        .addGap(18, 18, 18)
+                        .addComponent(addpr)))
+                .addGap(21, 21, 21)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 138, Short.MAX_VALUE)
+                        .addComponent(buypr)
                         .addGap(61, 61, 61)
-                        .addComponent(jButton7)
+                        .addComponent(removepr)
                         .addGap(66, 66, 66)
-                        .addComponent(jButton8)
+                        .addComponent(Deleteboard)
                         .addGap(198, 198, 198))
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1)
                         .addContainerGap())))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 715, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(14, Short.MAX_VALUE))
+                        .addComponent(back)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1)
+                .addComponent(back)
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(par, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(prname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(prquantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(prdata, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
-                            .addComponent(jLabel7))
-                        .addGap(43, 43, 43)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jButton2)
-                                .addComponent(jButton3)
-                                .addComponent(jButton4)
-                                .addComponent(jButton5))
-                            .addComponent(jButton7)
-                            .addComponent(jButton8)
-                            .addComponent(jButton6))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(18, 18, 18))
+                            .addComponent(proprice)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(8, 8, 8)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(addpr)
+                        .addComponent(clearsearch)
+                        .addComponent(prsearch)
+                        .addComponent(resettextfield))
+                    .addComponent(removepr)
+                    .addComponent(Deleteboard)
+                    .addComponent(buypr))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void parActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_parActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_parActionPerformed
 
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
+    private void prdataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prdataActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5ActionPerformed
+    }//GEN-LAST:event_prdataActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void clearsearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearsearchActionPerformed
+       par.setText(" ");
+       prname.setText(" ");
+       proprice.setText(" ");
+       prquantity.setText(" ");
+       prdata.setText(" ");
+                          
+    }//GEN-LAST:event_clearsearchActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
+    private void buyprActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buyprActionPerformed
+  
+        
 
+    }//GEN-LAST:event_buyprActionPerformed
+
+    private void resettextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resettextfieldActionPerformed
+        dis();
+        showdata();
+        act();
+   
+    }//GEN-LAST:event_resettextfieldActionPerformed
+
+    private void searchtableAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_searchtableAncestorAdded
+       showdata();
+       act();
+      
+    }//GEN-LAST:event_searchtableAncestorAdded
+
+    private void addprActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addprActionPerformed
+        TableModel model1 = searchtable.getModel();        
+        int[] pos = searchtable.getSelectedRows();        
+        Object[] row = new Object[6];        
+        DefaultTableModel model2 = (DefaultTableModel) listofbuy.getModel();  
+        MedicineModel medicineModel = new MedicineModel();
+        for (int i = 0; i < pos.length; i++) {
+            row[0] = model1.getValueAt(pos[i], 0);            
+            row[1] = model1.getValueAt(pos[i], 1);            
+            row[2] = model1.getValueAt(pos[i], 2);            
+            row[3] = model1.getValueAt(pos[i], 3);            
+            row[4] = model1.getValueAt(pos[i], 4);            
+            row[5] = model1.getValueAt(pos[i], 5);            
+            model2.addRow(row);  
+         
+           }
+        // DefaultTableModel model3 = (DefaultTableModel) listofbuy.getModel();
+      
+
+    }//GEN-LAST:event_addprActionPerformed
+
+    private void prsearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prsearchActionPerformed
+       
+            search();
+            
+    }//GEN-LAST:event_prsearchActionPerformed
+
+    private void removeprActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeprActionPerformed
+          int i=listofbuy.getSelectedRow();
+          DefaultTableModel model = (DefaultTableModel) listofbuy.getModel();
+          model.removeRow(i);
+    }//GEN-LAST:event_removeprActionPerformed
+
+    private void DeleteboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteboardActionPerformed
+           // System.out.println(MedicineModel.buydata.get(1));
+            DefaultTableModel m=(DefaultTableModel) listofbuy.getModel();
+            
+    }//GEN-LAST:event_DeleteboardActionPerformed
+
+    private void prquantityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prquantityActionPerformed
+                        Float cost=0.0f;
+                        int q=0;
+                        Float p=0.0f;
+                        String s=prquantity.getText();
+                        String s2=proprice.getText();
+                        q=Integer.parseInt(s);
+                        p=Float.parseFloat(s2);                       
+                        cost=(float)q*p;
+                        String finalcost=Float.toString(cost);
+                        proprice.setText(finalcost);
+                     
+                     int pos = searchtable.getSelectedRow();
+                     DefaultTableModel model = (DefaultTableModel) searchtable.getModel();
+                     int mainq= MedicineModel.dataofmedicine.get(4).getQuantity_M();
+                     String sq=prquantity.getText();
+                     int ssq=Integer.parseInt(sq);
+                     int result=mainq-ssq;
+                     
+                     DBConnection connection=new DBConnection();                     
+                     String endgame=Integer.toString(result);
+                     connection.Update("Medicine","Quantity ="+endgame+"","Parcode ="+par.getText()+"");
+                     model.setValueAt(endgame, pos, 4);
+                     endgame="";
+                     result=0;
+       
+        
+                       
+                        
+    }//GEN-LAST:event_prquantityActionPerformed
+
+    private void update()
+    {
+        int pos=listofbuy.getSelectedRow();
+        DefaultTableModel model=(DefaultTableModel) listofbuy.getModel();
+        if(pos>=0)
+        {
+            model.setValueAt(par.getText(), pos,0);
+            model.setValueAt( prname.getText(), pos,1);
+            model.setValueAt(proprice.getText(), pos,2);
+            //model.setValueAt(prquantity.getText(), pos,3);
+            model.setValueAt(prquantity.getText(), pos,4);
+            model.setValueAt(prdata.getText(), pos,5);
+        }
+    }
+           
+                  
+    private void showdata()
+    {
+        
+       DBConnection connect=new DBConnection();
+      
+        connect.select("Medicine","");
+        String [] c={"Parcode","Med_Nam","price","Retail","Quantity","EXP"};
+        DefaultTableModel model=new DefaultTableModel();
+        model.addColumn(c[0]);
+        model.addColumn(c[1]);
+        model.addColumn(c[2]);
+        model.addColumn(c[3]);
+        model.addColumn(c[4]);
+        model.addColumn(c[5]);
+        
+         String []r=new String[6];
+      
+        for (int i = 0; i < Models.MedicineModel.dataofmedicine.size(); i++) {
+            r[0]=Models.MedicineModel.dataofmedicine.get(i).getParcode()+"";
+            r[1]=Models.MedicineModel.dataofmedicine.get(i).getMed_Name()+"";
+            r[2]=Models.MedicineModel.dataofmedicine.get(i).getPrice()+"";
+            r[3]=Models.MedicineModel.dataofmedicine.get(i).getRetail()+"";
+            r[4]=Models.MedicineModel.dataofmedicine.get(i).getQuantity_M()+"";
+            r[5]=Models.MedicineModel.dataofmedicine.get(i).getEXP();
+            model.addRow(r);
+        }
+
+       searchtable.setModel(model);
+      
+       
+    }
+    private void act()
+    {
+      ListSelectionModel model=searchtable.getSelectionModel();
+      model.addListSelectionListener(new ListSelectionListener() {
+          @Override
+          public void valueChanged(ListSelectionEvent e) {
+              if(! model.isSelectionEmpty())
+              {
+                   int i=model.getLeadSelectionIndex();
+                  
+                    String []r=new String[6];
+                    r[0]=Models.MedicineModel.dataofmedicine.get(i).getParcode()+"";
+                    r[1]=Models.MedicineModel.dataofmedicine.get(i).getMed_Name()+"";
+                    r[2]=Models.MedicineModel.dataofmedicine.get(i).getPrice()+"";
+                    r[3]=Models.MedicineModel.dataofmedicine.get(i).getRetail()+"";
+                    r[4]=Models.MedicineModel.dataofmedicine.get(i).getQuantity_M()+"";
+                    r[5]=Models.MedicineModel.dataofmedicine.get(i).getEXP();
+                    par.setText(r[0]);
+                    prname.setText(r[1]);
+                    proprice.setText(r[2]);
+                    prquantity.setText("1");
+                    prdata.setText(r[5]);
+                   
+                  }
+              
+              
+             
+          }
+      });
+    }
+    private void dis()
+    {
+            
+        for (int i = 0; i <MedicineModel.dataofmedicine.size(); i++) {
+           
+                      MedicineModel.dataofmedicine.remove(i);
+                      
+                       
+        }
+         MedicineModel.dataofmedicine.clear();
+        //showdata();
+    }
+    private void search() 
+    {
+         dis();
+      
+        DBConnection connect=new DBConnection();
+        String parcode=par.getText();
+        connect.select("Medicine","Parcode ="+parcode+"");
+        
+       String [] c={"Parcode","Med_Nam","price","Retail","Quantity","EXP"};
+        DefaultTableModel model1=new DefaultTableModel();
+        model1.addColumn(c[0]);
+        model1.addColumn(c[1]);
+        model1.addColumn(c[2]);
+        model1.addColumn(c[3]);
+        model1.addColumn(c[4]);
+        model1.addColumn(c[5]);
+        
+         String []r=new String[6];
+      
+        for (int i = 0; i < Models.MedicineModel.dataofmedicine.size(); i++) {
+            r[0]=Models.MedicineModel.dataofmedicine.get(i).getParcode()+"";
+            r[1]=Models.MedicineModel.dataofmedicine.get(i).getMed_Name()+"";
+            r[2]=Models.MedicineModel.dataofmedicine.get(i).getPrice()+"";
+            r[3]=Models.MedicineModel.dataofmedicine.get(i).getRetail()+"";
+            r[4]=Models.MedicineModel.dataofmedicine.get(i).getQuantity_M()+"";
+            r[5]=Models.MedicineModel.dataofmedicine.get(i).getEXP();
+            model1.addRow(r);
+        } 
+       
+        
+       searchtable.setModel(model1);
+       par.setText("");
+       
+        
+    }
+    
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -322,31 +572,27 @@ public class Sell extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
+    private javax.swing.JButton Deleteboard;
+    private javax.swing.JButton addpr;
+    private javax.swing.JButton back;
+    private javax.swing.JButton buypr;
+    private javax.swing.JButton clearsearch;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTable listofbuy;
+    private javax.swing.JTextField par;
+    private javax.swing.JTextField prdata;
+    private javax.swing.JTextField prname;
+    private javax.swing.JLabel proprice;
+    private javax.swing.JTextField prquantity;
+    private javax.swing.JButton prsearch;
+    private javax.swing.JButton removepr;
+    private javax.swing.JButton resettextfield;
+    private javax.swing.JTable searchtable;
     // End of variables declaration//GEN-END:variables
 }
