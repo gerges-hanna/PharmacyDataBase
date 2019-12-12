@@ -5,12 +5,17 @@
  */
 package Models;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Gerges hanna FCI-H
  */
 
 public class MedicineModel{
+   
+    public static ArrayList<MedicineModel> dataofmedicine =new ArrayList<MedicineModel>();
+    public static ArrayList<MedicineModel> buydata =new ArrayList<MedicineModel>();
     private int ID_M;
     private String Parcode;
     private String Med_Name;
@@ -18,6 +23,20 @@ public class MedicineModel{
     private double Retail;
     private int Quantity_M;
     private String EXP;
+
+    public MedicineModel() {
+    }
+
+    public MedicineModel(String Parcode, String Med_Name, double price, double Retail, int Quantity_M, String EXP) {
+        this.Parcode = Parcode;
+        this.Med_Name = Med_Name;
+        this.price = price;
+        this.Retail = Retail;
+        this.Quantity_M = Quantity_M;
+        this.EXP = EXP;
+    }
+
+    
 
     public int getID_M() {
         return ID_M;
@@ -74,6 +93,8 @@ public class MedicineModel{
     public void setEXP(String EXP) {
         this.EXP = EXP;
     }
+
+   
     
     
 }
