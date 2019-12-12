@@ -355,6 +355,19 @@ public class Sell extends javax.swing.JFrame {
             model2.addRow(row);  
          
            }
+        int poos = searchtable.getSelectedRow();
+                     DefaultTableModel model = (DefaultTableModel) searchtable.getModel();
+                     int mainq= MedicineModel.dataofmedicine.get(4).getQuantity_M();
+                     String sq=prquantity.getText();
+                     int ssq=Integer.parseInt(sq);
+                     int result=mainq-ssq;
+                     
+                     /*DBConnection connection=new DBConnection();                     
+                     String endgame=Integer.toString(result);
+                     connection.Update("Medicine","Quantity ="+endgame+"","Parcode ="+par.getText()+"");
+                     model.setValueAt(endgame, poos, 4);
+                     endgame="";
+                     result=0;*/
         // DefaultTableModel model3 = (DefaultTableModel) listofbuy.getModel();
       
 
@@ -401,8 +414,9 @@ public class Sell extends javax.swing.JFrame {
                      String endgame=Integer.toString(result);
                      connection.Update("Medicine","Quantity ="+endgame+"","Parcode ="+par.getText()+"");
                      model.setValueAt(endgame, pos, 4);
-                     endgame="";
-                     result=0;
+                     MedicineModel m=new MedicineModel();
+                     m.setQuantity_M(result);
+                    
        
         
                        
