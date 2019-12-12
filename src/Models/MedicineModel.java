@@ -36,6 +36,17 @@ public class MedicineModel{
         this.EXP = EXP;
     }
 
+    public MedicineModel(int ID_M, String Parcode, String Med_Name, double price, double Retail, int Quantity_M, String EXP) {
+        this.ID_M = ID_M;
+        this.Parcode = Parcode;
+        this.Med_Name = Med_Name;
+        this.price = price;
+        this.Retail = Retail;
+        this.Quantity_M = Quantity_M;
+        this.EXP = EXP;
+    }
+    
+
     
 
     public int getID_M() {

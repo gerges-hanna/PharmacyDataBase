@@ -172,15 +172,13 @@ public class DBConnection {
                 }
             }else if(tableName.equalsIgnoreCase("Medicine"))
             {
-                while (rs.next()) {  
-                System.out.println(rs.getInt("ID") +  "\t" +   
-                                   rs.getString("Parcode")+"\t"
-                                    +rs.getString("Med_name") +  "\t" +   
-                                   rs.getDouble("Price")+"\t"
-                                    +rs.getDouble("Retail") +  "\t" +   
-                                   rs.getInt("Quantity")+"\t"+
-                                   rs.getString("Expire")
-                                           );  
+                while (rs.next()) { 
+                     MedicineModel m=new MedicineModel(rs.getInt("ID"),rs.getString("Parcode")
+                       ,rs.getString("Med_name"),rs.getDouble("Price")
+                       ,rs.getDouble("Retail"),rs.getInt("Quantity")
+                       ,rs.getString("Expire"));
+                    MedicineModel.dataofmedicine.add(m);
+                
                 }
             }else if(tableName.equalsIgnoreCase("SellReview"))
             {
