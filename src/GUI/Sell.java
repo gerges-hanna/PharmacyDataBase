@@ -153,7 +153,7 @@ public class Sell extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Parcode", "Med_name", "price", "Retail", "Quantity", "EXP"
+                "Parcode", "Med_name", "price", "Quantity", "EXP"
             }
         ));
         jScrollPane1.setViewportView(listofbuy);
@@ -330,6 +330,11 @@ public class Sell extends javax.swing.JFrame {
         dis();
         showdata();
         act();
+       par.setText(" ");
+       prname.setText(" ");
+       proprice.setText(" ");
+       prquantity.setText(" ");
+       prdata.setText(" ");
    
     }//GEN-LAST:event_resettextfieldActionPerformed
 
@@ -340,36 +345,16 @@ public class Sell extends javax.swing.JFrame {
     }//GEN-LAST:event_searchtableAncestorAdded
 
     private void addprActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addprActionPerformed
-        TableModel model1 = searchtable.getModel();        
-        int[] pos = searchtable.getSelectedRows();        
-        Object[] row = new Object[6];        
-        DefaultTableModel model2 = (DefaultTableModel) listofbuy.getModel();  
-        MedicineModel medicineModel = new MedicineModel();
-        for (int i = 0; i < pos.length; i++) {
-            row[0] = model1.getValueAt(pos[i], 0);            
-            row[1] = model1.getValueAt(pos[i], 1);            
-            row[2] = model1.getValueAt(pos[i], 2);            
-            row[3] = model1.getValueAt(pos[i], 3);            
-            row[4] = model1.getValueAt(pos[i], 4);            
-            row[5] = model1.getValueAt(pos[i], 5);            
-            model2.addRow(row);  
-         
-           }
-        /*int poos = searchtable.getSelectedRow();
-                     DefaultTableModel model = (DefaultTableModel) searchtable.getModel();
-                     int mainq= MedicineModel.dataofmedicine.get(4).getQuantity_M();
-                     String sq=prquantity.getText();
-                     int ssq=Integer.parseInt(sq);
-                     int result=mainq-ssq;*/
-                     
-                     /*DBConnection connection=new DBConnection();                     
-                     String endgame=Integer.toString(result);
-                     connection.Update("Medicine","Quantity ="+endgame+"","Parcode ="+par.getText()+"");
-                     model.setValueAt(endgame, poos, 4);
-                     endgame="";
-                     result=0;*/
-        // DefaultTableModel model3 = (DefaultTableModel) listofbuy.getModel();
-      
+        DefaultTableModel model=(DefaultTableModel) listofbuy.getModel();
+        Object[] r=new Object[5];
+        r[0]=par.getText();
+        r[1]=prname.getText();
+        r[3]=prquantity.getText();
+        r[2]=proprice.getText();
+        r[4]=prdata.getText();
+        model.addRow(r);
+        
+        qm();
 
     }//GEN-LAST:event_addprActionPerformed
 
@@ -392,7 +377,11 @@ public class Sell extends javax.swing.JFrame {
     }//GEN-LAST:event_DeleteboardActionPerformed
 
     private void prquantityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prquantityActionPerformed
-                        Float cost=0.0f;
+          
+    }//GEN-LAST:event_prquantityActionPerformed
+    private  void qm()
+    {
+                 Float cost=0.0f;
                         int q=0;
                         Float p=0.0f;
                         int result=0;
@@ -408,7 +397,6 @@ public class Sell extends javax.swing.JFrame {
                      
                      int pos = searchtable.getSelectedRow();
                      DefaultTableModel model = (DefaultTableModel) searchtable.getModel();
-                     //mainq= MedicineModel.dataofmedicine.get(4).getQuantity_M();
                      mainq=Models.MedicineModel.dataofmedicine.get(pos).getQuantity_M();
                      String sq=prquantity.getText();
                      ssq=Integer.parseInt(sq);
@@ -418,14 +406,9 @@ public class Sell extends javax.swing.JFrame {
                      String endgame=Integer.toString(result);
                      connection.Update("Medicine","Quantity ="+endgame+"","Parcode ="+par.getText()+"");
                      model.setValueAt(endgame, pos, 4);
-                     MedicineModel m=new MedicineModel();
-                    
-       
-        
-                       
-                        
-    }//GEN-LAST:event_prquantityActionPerformed
-
+                     
+    }
+    
     private void update()
     {
         int pos=listofbuy.getSelectedRow();
