@@ -484,7 +484,12 @@ public class Sell extends javax.swing.JFrame {
         mainq=Models.MedicineModel.dataofmedicine.get(pos).getQuantity_M();
         String s=prquantity.getText();
         q=Integer.parseInt(s);       
-        if(mainq>0){
+        
+        if(q>mainq){
+              JOptionPane.showInternalMessageDialog(null,"Sorry not sorry");
+ 
+        }
+        else if(mainq>0){
                 
             String s2=proprice.getText();
             p=Float.parseFloat(s2); 
