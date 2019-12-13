@@ -430,7 +430,7 @@ public class Sell extends javax.swing.JFrame {
         }
            else
            {
-               JOptionPane.showMessageDialog(null,"Sorry not sorry");
+               JOptionPane.showMessageDialog(null,"To Make Order You Should Select Some Ptoduct ");
            }
     
     }//GEN-LAST:event_addprActionPerformed
@@ -579,7 +579,7 @@ public class Sell extends javax.swing.JFrame {
         }
          else
          {
-             JOptionPane.showMessageDialog(this,"no thing");
+             JOptionPane.showMessageDialog(this,"No Thing To Delete");
          }
         
     }//GEN-LAST:event_DeleteBoardActionPerformed
@@ -604,7 +604,7 @@ public class Sell extends javax.swing.JFrame {
         q=Integer.parseInt(s);       
         
         if(q>mainq){
-              JOptionPane.showMessageDialog(this,"Sorry not sorry");
+              JOptionPane.showMessageDialog(this,"Sorry We Don't Have The Quantity You Want");
  
         }
         else if(mainq>0){
@@ -685,7 +685,7 @@ public class Sell extends javax.swing.JFrame {
         
         }else
         {
-            JOptionPane.showMessageDialog(this,"Sorry not sorry");
+            JOptionPane.showMessageDialog(this,"َSold out");
         }
 
     }
