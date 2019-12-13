@@ -42,6 +42,8 @@ public class Sell extends javax.swing.JFrame {
    
     public Sell() {
         initComponents();
+         this.setSize(1200, 700);
+        this.setLocationRelativeTo(null);
         
     }
 
@@ -83,6 +85,11 @@ public class Sell extends javax.swing.JFrame {
 
         back.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         back.setText("Back");
+        back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 17)); // NOI18N
         jLabel1.setText("Parcode");
@@ -190,10 +197,10 @@ public class Sell extends javax.swing.JFrame {
             }
         ));
         searchtable.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 searchtableAncestorAdded(evt);
-            }
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
@@ -423,7 +430,7 @@ public class Sell extends javax.swing.JFrame {
         }
            else
            {
-               JOptionPane.showInternalMessageDialog(null,"Sorry not sorry");
+               JOptionPane.showMessageDialog(null,"Sorry not sorry");
            }
     
     }//GEN-LAST:event_addprActionPerformed
@@ -572,10 +579,17 @@ public class Sell extends javax.swing.JFrame {
         }
          else
          {
-             JOptionPane.showInternalMessageDialog(null,"no thing");
+             JOptionPane.showMessageDialog(this,"no thing");
          }
         
     }//GEN-LAST:event_DeleteBoardActionPerformed
+
+    private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
+        // TODO add your handling code here:
+        HomePage p=new HomePage();
+            p.setVisible(true);
+            this.dispose();
+    }//GEN-LAST:event_backActionPerformed
     private  void qm()
     {
         int q=0;
@@ -590,7 +604,7 @@ public class Sell extends javax.swing.JFrame {
         q=Integer.parseInt(s);       
         
         if(q>mainq){
-              JOptionPane.showInternalMessageDialog(null,"Sorry not sorry");
+              JOptionPane.showMessageDialog(this,"Sorry not sorry");
  
         }
         else if(mainq>0){
@@ -671,7 +685,7 @@ public class Sell extends javax.swing.JFrame {
         
         }else
         {
-            JOptionPane.showInternalMessageDialog(null,"Sorry not sorry");
+            JOptionPane.showMessageDialog(this,"Sorry not sorry");
         }
 
     }
