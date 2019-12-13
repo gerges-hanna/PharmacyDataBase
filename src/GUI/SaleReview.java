@@ -101,7 +101,7 @@ public class SaleReview extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Search:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Operation_ID", "Parcode", "Med_Name", "Price", "Retail", "Quantity", "Emp_ID", "Sell_Date", "Sell_Time", "ID_Med" }));
 
         jButton2.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jButton2.setText("Search");
