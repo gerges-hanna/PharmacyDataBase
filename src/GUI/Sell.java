@@ -8,7 +8,6 @@ package GUI;
 import Models.DBConnection;
 import Models.MedicineModel;
 import static Models.MedicineModel.dataofmedicine;
-import Models.ReviewModel;
 import java.awt.PopupMenu;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -322,44 +321,41 @@ public class Sell extends javax.swing.JFrame {
 
     private void buyprActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buyprActionPerformed
          DefaultTableModel model=(DefaultTableModel) listofbuy.getModel();
-         
-         ReviewModel review=new ReviewModel(); 
+         MedicineModel medicineModel=new MedicineModel();
          int i=listofbuy.getRowCount();
         
          Object[] r=new Object[5];
          for (int j = 0; j < i; j++) {
              r[0]=model.getValueAt(j,0);
-             review.setParcode(r[0].toString());
+             medicineModel.setParcode(r[0].toString());
              r[1]=model.getValueAt(j,1);
-             review.setMed_Name(r[1].toString());
+             medicineModel.setMed_Name(r[1].toString());
              r[2]=model.getValueAt(j,2);
              
              String pr=r[2].toString();
              Float price=Float.valueOf(pr);
-             review.setPrice(price);
+             medicineModel.setPrice(price);
              
              r[3]=model.getValueAt(j,3);
              String q=r[3].toString();
              int qu=Integer.parseInt(q);
-             review.setQuantity_M(qu);
+             medicineModel.setQuantity_M(qu);
              
              
              r[4]=model.getValueAt(j,4);
-             review.setSell_Date(r[4].toString());
-             
-             
+             medicineModel.setEXP(r[4].toString());
+             Models.MedicineModel.buydata.add(medicineModel);
         }
-            Models.ReviewModel.listReview.add(review);
        
-                
-         Object []ro=new Object[5];
+                Object []ro=new Object[5];
       
-         for (int j = 0; j < Models.ReviewModel.listReview.size()/2; j++) {
-            ro[0]=Models.ReviewModel.listReview.get(j).getParcode()+"";
-            ro[1]=Models.ReviewModel.listReview.get(j).getMed_Name()+"";
-            ro[2]=Models.ReviewModel.listReview.get(j).getPrice()+"";
-            ro[3]=Models.ReviewModel.listReview.get(j).getQuantity_M()+"";
-            ro[4]=Models.ReviewModel.listReview.get(j).getSell_Date();
+         for (int j = 0; j < Models.MedicineModel.buydata.size()/2; j++) {
+            ro[0]=Models.MedicineModel.buydata.get(j).getParcode()+"";
+            ro[1]=Models.MedicineModel.buydata.get(j).getMed_Name()+"";
+            ro[2]=Models.MedicineModel.buydata.get(j).getPrice()+"";
+           // ro[3]=Models.MedicineModel.buydata.get(j).getRetail()+"";
+            ro[3]=Models.MedicineModel.buydata.get(j).getQuantity_M()+"";
+            ro[4]=Models.MedicineModel.buydata.get(j).getEXP()+"";
             System.out.println(Arrays.toString(ro));
           
         }
@@ -445,15 +441,17 @@ public class Sell extends javax.swing.JFrame {
           
          connect.Update("Medicine","Quantity = "+endgame+"","Parcode = "+par+"");
          Object[]ro=new Object[5];
-         for (int j = 0; j < Models.ReviewModel.listReview.size()/2; j++) {
-            ro[0]=Models.ReviewModel.listReview.get(j).getParcode()+"";
-            ro[1]=Models.ReviewModel.listReview.get(j).getMed_Name()+"";
-            ro[2]=Models.ReviewModel.listReview.get(j).getPrice()+"";           
-            ro[3]=Models.ReviewModel.listReview.get(j).getQuantity_M()+"";
-            ro[4]=Models.ReviewModel.listReview.get(j).getSell_Date()+"";          
+         for (int j = 0; j < Models.MedicineModel.buydata.size()/2; j++) {
+            ro[0]=Models.MedicineModel.buydata.get(j).getParcode()+"";
+            ro[1]=Models.MedicineModel.buydata.get(j).getMed_Name()+"";
+            ro[2]=Models.MedicineModel.buydata.get(j).getPrice()+"";
+           // ro[3]=Models.MedicineModel.buydata.get(j).getRetail()+"";
+            ro[3]=Models.MedicineModel.buydata.get(j).getQuantity_M()+"";
+            ro[4]=Models.MedicineModel.buydata.get(j).getEXP()+"";
+            //System.out.println(Arrays.toString(ro));
             if(ro[0].equals(par))
             {
-                ReviewModel.listReview.remove(ro);
+                MedicineModel.buydata.remove(ro);
                 break;
             }
           
