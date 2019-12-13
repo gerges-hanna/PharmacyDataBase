@@ -8,9 +8,11 @@ package GUI;
 import Models.DBConnection;
 import Models.MedicineModel;
 import static Models.MedicineModel.dataofmedicine;
+import Models.ReviewModel;
 import java.awt.PopupMenu;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import static java.lang.reflect.Array.set;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -217,19 +219,17 @@ public class Sell extends javax.swing.JFrame {
                     .addComponent(jLabel6)
                     .addComponent(jLabel4)
                     .addComponent(clearsearch))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(proprice)
+                            .addGap(0, 232, Short.MAX_VALUE))
+                        .addComponent(prdata)
+                        .addComponent(par)
+                        .addComponent(prname)
+                        .addComponent(prquantity))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(proprice)
-                                .addGap(0, 232, Short.MAX_VALUE))
-                            .addComponent(prdata)
-                            .addComponent(par)
-                            .addComponent(prname)
-                            .addComponent(prquantity)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
                         .addComponent(prsearch)
                         .addGap(18, 18, 18)
                         .addComponent(resettextfield)
@@ -321,9 +321,53 @@ public class Sell extends javax.swing.JFrame {
     }//GEN-LAST:event_clearsearchActionPerformed
 
     private void buyprActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buyprActionPerformed
-  
+         DefaultTableModel model=(DefaultTableModel) listofbuy.getModel();
+         
+         ReviewModel review=new ReviewModel(); 
+         int i=listofbuy.getRowCount();
         
-
+         Object[] r=new Object[5];
+         for (int j = 0; j < i; j++) {
+             r[0]=model.getValueAt(j,0);
+             review.setParcode(r[0].toString());
+             r[1]=model.getValueAt(j,1);
+             review.setMed_Name(r[1].toString());
+             r[2]=model.getValueAt(j,2);
+             
+             String pr=r[2].toString();
+             Float price=Float.valueOf(pr);
+             review.setPrice(price);
+             
+             r[3]=model.getValueAt(j,3);
+             String q=r[3].toString();
+             int qu=Integer.parseInt(q);
+             review.setQuantity_M(qu);
+             
+             
+             r[4]=model.getValueAt(j,4);
+             review.setSell_Date(r[4].toString());
+             
+             
+        }
+            Models.ReviewModel.listReview.add(review);
+       
+                
+         Object []ro=new Object[5];
+      
+         for (int j = 0; j < Models.ReviewModel.listReview.size()/2; j++) {
+            ro[0]=Models.ReviewModel.listReview.get(j).getParcode()+"";
+            ro[1]=Models.ReviewModel.listReview.get(j).getMed_Name()+"";
+            ro[2]=Models.ReviewModel.listReview.get(j).getPrice()+"";
+            ro[3]=Models.ReviewModel.listReview.get(j).getQuantity_M()+"";
+            ro[4]=Models.ReviewModel.listReview.get(j).getSell_Date();
+            System.out.println(Arrays.toString(ro));
+          
+        }
+         //System.out.println(Arrays.toString(ro));
+          //DefaultTableModel model2 = (DefaultTableModel) listofbuy.getModel();
+           model.setRowCount(0);  
+         
+        
     }//GEN-LAST:event_buyprActionPerformed
 
     private void resettextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resettextfieldActionPerformed
@@ -345,38 +389,25 @@ public class Sell extends javax.swing.JFrame {
     }//GEN-LAST:event_searchtableAncestorAdded
 
     private void addprActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addprActionPerformed
-        DefaultTableModel model=(DefaultTableModel) listofbuy.getModel();
-        qm();
-        Object[] r=new Object[5];
-        r[0]=par.getText();
-        r[1]=prname.getText();
-        r[3]=prquantity.getText();
-        r[2]=proprice.getText();
-        r[4]=prdata.getText();
-        
-        //String Parcode, String Med_Name, double price, double Retail, int Quantity_M, String EXP
-        MedicineModel medicineModel=new MedicineModel();
-        medicineModel.setParcode(par.getText());
-        medicineModel.setMed_Name(prname.getText());
-        String price=proprice.getText();
-        Float p=Float.valueOf(price);
-        medicineModel.setPrice(p);
-        String qu=prquantity.getText();
-        int q=Integer.parseInt(qu);
-        medicineModel.setQuantity_M(q);
-        medicineModel.setEXP(prdata.getText());
-        Models.MedicineModel.buydata.add(medicineModel);
-        model.addRow(r);
-        
-       /* for (int i = 0; i < Models.MedicineModel.buydata.size(); i++) {
-        System.out.println(MedicineModel.buydata.get(i).getParcode());
-        System.out.println(MedicineModel.buydata.get(i).getMed_Name());
-        System.out.println(MedicineModel.buydata.get(i).getPrice());
-        System.out.println(MedicineModel.buydata.get(i).getQuantity_M());
-        System.out.println(MedicineModel.buydata.get(i).getEXP());
-        }*/
+          DefaultTableModel m=(DefaultTableModel) searchtable.getModel();
+         int i= searchtable.getSelectedRow();
+           if (i>=0) {
+            
+           qm();
+           dis();
+           showdata();
+           act();
+           par.setText(" ");
+           prname.setText(" ");
+           proprice.setText(" ");
+           prquantity.setText(" ");
+           prdata.setText(" "); 
+        }
+           else
+           {
+               JOptionPane.showInternalMessageDialog(null,"Sorry not sorry");
+           }
     
-        
     }//GEN-LAST:event_addprActionPerformed
 
     private void prsearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prsearchActionPerformed
@@ -386,9 +417,49 @@ public class Sell extends javax.swing.JFrame {
     }//GEN-LAST:event_prsearchActionPerformed
 
     private void removeprActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeprActionPerformed
-          int i=listofbuy.getSelectedRow();
-          DefaultTableModel model = (DefaultTableModel) listofbuy.getModel();
-          model.removeRow(i);
+         int i=listofbuy.getSelectedRow();
+         DefaultTableModel model = (DefaultTableModel) listofbuy.getModel();
+         String ss=model.getValueAt(i,3).toString();
+         int qfrombuy=Integer.parseInt(ss);
+         String par=model.getValueAt(i,0).toString();
+          
+         DBConnection connect=new DBConnection();
+          
+         connect.select("Medicine","Parcode = "+par+"");
+         
+         Object []r=new Object[6];
+      
+         for (int j = 0; j < Models.MedicineModel.dataofmedicine.size(); j++) {
+            r[0]=Models.MedicineModel.dataofmedicine.get(j).getParcode()+"";
+            r[1]=Models.MedicineModel.dataofmedicine.get(j).getMed_Name()+"";
+            r[2]=Models.MedicineModel.dataofmedicine.get(j).getPrice()+"";
+            r[3]=Models.MedicineModel.dataofmedicine.get(j).getRetail()+"";
+            r[4]=Models.MedicineModel.dataofmedicine.get(j).getQuantity_M()+"";
+            r[5]=Models.MedicineModel.dataofmedicine.get(j).getEXP();
+          
+        }
+            
+         String qfrommain=r[4].toString();
+         int quant=Integer.parseInt(qfrommain);
+         int endgame=quant+qfrombuy;
+          
+         connect.Update("Medicine","Quantity = "+endgame+"","Parcode = "+par+"");
+         Object[]ro=new Object[5];
+         for (int j = 0; j < Models.ReviewModel.listReview.size()/2; j++) {
+            ro[0]=Models.ReviewModel.listReview.get(j).getParcode()+"";
+            ro[1]=Models.ReviewModel.listReview.get(j).getMed_Name()+"";
+            ro[2]=Models.ReviewModel.listReview.get(j).getPrice()+"";           
+            ro[3]=Models.ReviewModel.listReview.get(j).getQuantity_M()+"";
+            ro[4]=Models.ReviewModel.listReview.get(j).getSell_Date()+"";          
+            if(ro[0].equals(par))
+            {
+                ReviewModel.listReview.remove(ro);
+                break;
+            }
+          
+        }
+         
+         model.removeRow(i);
     }//GEN-LAST:event_removeprActionPerformed
 
     private void DeleteboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteboardActionPerformed
@@ -401,42 +472,78 @@ public class Sell extends javax.swing.JFrame {
     }//GEN-LAST:event_DeleteboardActionPerformed
 
     private void prquantityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prquantityActionPerformed
-          
+         
     }//GEN-LAST:event_prquantityActionPerformed
     private  void qm()
     {
-                 Float cost=0.0f;
-                        int q=0;
-                        Float p=0.0f;
-                        int result=0;
-                        int ssq=0;
-                        int mainq;
-                        String s=prquantity.getText();
-                        String s2=proprice.getText();
-                        q=Integer.parseInt(s);
-                        p=Float.parseFloat(s2);                       
-                        cost=(float)q*p;
-                        String finalcost=Float.toString(cost);
-                        proprice.setText(finalcost);
+        int q=0;
+        Float cost=0.0f;                       
+        Float p=0.0f;
+        int result=0;
+        int ssq=0;
+        int mainq;
+        int pos = searchtable.getSelectedRow();
+        mainq=Models.MedicineModel.dataofmedicine.get(pos).getQuantity_M();
+        String s=prquantity.getText();
+        q=Integer.parseInt(s);       
+        if(mainq>0){
+                
+            String s2=proprice.getText();
+            p=Float.parseFloat(s2); 
+            cost=(float)q*p;
+            String finalcost=Float.toString(cost);
+            proprice.setText(finalcost);
+            
+            DefaultTableModel model = (DefaultTableModel) searchtable.getModel();
+            mainq=Models.MedicineModel.dataofmedicine.get(pos).getQuantity_M();
+            String sq=prquantity.getText();
+            ssq=Integer.parseInt(sq);
+            result=mainq-ssq;
                      
-                     int pos = searchtable.getSelectedRow();
-                     DefaultTableModel model = (DefaultTableModel) searchtable.getModel();
-                     mainq=Models.MedicineModel.dataofmedicine.get(pos).getQuantity_M();
-                     String sq=prquantity.getText();
-                     ssq=Integer.parseInt(sq);
-                     result=mainq-ssq;
-                     
-                     DBConnection connection=new DBConnection();                     
-                     String endgame=Integer.toString(result);
-                     connection.Update("Medicine","Quantity ="+endgame+"","Parcode ="+par.getText()+"");
-                     model.setValueAt(endgame, pos, 4);
-                     
+            DBConnection connection=new DBConnection();                     
+            String endgame=Integer.toString(result);
+            connection.Update("Medicine","Quantity ="+endgame+"","Parcode ="+par.getText()+"");
+            model.setValueAt(endgame, pos, 4);
+            
+            
+            
+            
+            DefaultTableModel model1=(DefaultTableModel) listofbuy.getModel();
+            Object[] r=new Object[5];
+            r[0]=par.getText();
+            r[1]=prname.getText();
+            r[3]=prquantity.getText();
+            r[2]=proprice.getText();
+            r[4]=prdata.getText();
+
+            //String Parcode, String Med_Name, double price, double Retail, int Quantity_M, String EXP
+            MedicineModel medicineModel=new MedicineModel();
+            medicineModel.setParcode(par.getText());
+            medicineModel.setMed_Name(prname.getText());
+
+            String price=proprice.getText();
+            Float pp=Float.valueOf(price);
+            medicineModel.setPrice(pp);
+
+            String qu=prquantity.getText();
+            int qq=Integer.parseInt(qu);
+            medicineModel.setQuantity_M(qq);
+
+            medicineModel.setEXP(prdata.getText());
+            Models.MedicineModel.buydata.add(medicineModel);
+            model1.addRow(r);
+        
+        }else
+        {
+            JOptionPane.showInternalMessageDialog(null,"Sorry not sorry");
+        }
+
     }
     
     private void update()
     {
-        int pos=listofbuy.getSelectedRow();
-        DefaultTableModel model=(DefaultTableModel) listofbuy.getModel();
+        int pos=searchtable.getSelectedRow();
+        DefaultTableModel model=(DefaultTableModel) searchtable.getModel();
         if(pos>=0)
         {
             model.setValueAt(par.getText(), pos,0);
@@ -597,6 +704,7 @@ public class Sell extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Sell.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */

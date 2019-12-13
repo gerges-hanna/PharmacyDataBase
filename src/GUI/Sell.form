@@ -37,22 +37,19 @@
                   <Component id="jLabel4" alignment="1" min="-2" max="-2" attributes="0"/>
                   <Component id="clearsearch" min="-2" max="-2" attributes="0"/>
               </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="proprice" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="232" max="32767" attributes="0"/>
-                          </Group>
-                          <Component id="prdata" alignment="0" max="32767" attributes="0"/>
-                          <Component id="par" max="32767" attributes="0"/>
-                          <Component id="prname" alignment="0" max="32767" attributes="0"/>
-                          <Component id="prquantity" alignment="0" max="32767" attributes="0"/>
+                  <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Component id="proprice" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="232" max="32767" attributes="0"/>
                       </Group>
+                      <Component id="prdata" alignment="0" max="32767" attributes="0"/>
+                      <Component id="par" max="32767" attributes="0"/>
+                      <Component id="prname" alignment="0" max="32767" attributes="0"/>
+                      <Component id="prquantity" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="prsearch" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="resettextfield" min="-2" max="-2" attributes="0"/>
