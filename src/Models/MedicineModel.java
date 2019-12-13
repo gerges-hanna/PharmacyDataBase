@@ -23,6 +23,9 @@ public class MedicineModel{
     private double Retail;
     private int Quantity_M;
     private String EXP;
+    
+
+    
 
     public MedicineModel() {
     }

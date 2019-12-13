@@ -6,8 +6,10 @@
 package GUI;
 
 import Models.DBConnection;
+import Models.EmployeeModel;
 import Models.MedicineModel;
 import static Models.MedicineModel.dataofmedicine;
+import Models.ReviewModel;
 import java.awt.PopupMenu;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,7 +34,8 @@ import javax.swing.table.TableModel;
  * @author John
  */
 public class Sell extends javax.swing.JFrame {
-
+    private ArrayList<Models.ReviewModel> toSell=new ArrayList<Models.ReviewModel>();
+    DefaultTableModel model1;
     /**
      * Creates new form Sell
      */
@@ -70,7 +73,6 @@ public class Sell extends javax.swing.JFrame {
         listofbuy = new javax.swing.JTable();
         buypr = new javax.swing.JButton();
         removepr = new javax.swing.JButton();
-        Deleteboard = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         searchtable = new javax.swing.JTable();
 
@@ -175,14 +177,6 @@ public class Sell extends javax.swing.JFrame {
             }
         });
 
-        Deleteboard.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        Deleteboard.setText("Delete Board");
-        Deleteboard.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DeleteboardActionPerformed(evt);
-            }
-        });
-
         searchtable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -195,10 +189,10 @@ public class Sell extends javax.swing.JFrame {
             }
         ));
         searchtable.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 searchtableAncestorAdded(evt);
-            }
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
@@ -241,9 +235,7 @@ public class Sell extends javax.swing.JFrame {
                         .addComponent(buypr)
                         .addGap(61, 61, 61)
                         .addComponent(removepr)
-                        .addGap(66, 66, 66)
-                        .addComponent(Deleteboard)
-                        .addGap(198, 198, 198))
+                        .addGap(385, 385, 385))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1)
                         .addContainerGap())))
@@ -292,7 +284,6 @@ public class Sell extends javax.swing.JFrame {
                         .addComponent(prsearch)
                         .addComponent(resettextfield))
                     .addComponent(removepr)
-                    .addComponent(Deleteboard)
                     .addComponent(buypr))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -320,48 +311,66 @@ public class Sell extends javax.swing.JFrame {
     }//GEN-LAST:event_clearsearchActionPerformed
 
     private void buyprActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buyprActionPerformed
-         DefaultTableModel model=(DefaultTableModel) listofbuy.getModel();
-         MedicineModel medicineModel=new MedicineModel();
-         int i=listofbuy.getRowCount();
-        
-         Object[] r=new Object[5];
-         for (int j = 0; j < i; j++) {
-             r[0]=model.getValueAt(j,0);
-             medicineModel.setParcode(r[0].toString());
-             r[1]=model.getValueAt(j,1);
-             medicineModel.setMed_Name(r[1].toString());
-             r[2]=model.getValueAt(j,2);
+//         DefaultTableModel model=(DefaultTableModel) listofbuy.getModel();
+//         MedicineModel medicineModel=new MedicineModel();
+//         int i=listofbuy.getRowCount();
+//        
+//         Object[] r=new Object[5];
+//         for (int j = 0; j < i; j++) {
+//             r[0]=model.getValueAt(j,0);
+//             medicineModel.setParcode(r[0].toString());
+//             r[1]=model.getValueAt(j,1);
+//             medicineModel.setMed_Name(r[1].toString());
+//             r[2]=model.getValueAt(j,2);
+//             
+//             String pr=r[2].toString();
+//             Float price=Float.valueOf(pr);
+//             medicineModel.setPrice(price);
+//             
+//             r[3]=model.getValueAt(j,3);
+//             String q=r[3].toString();
+//             int qu=Integer.parseInt(q);
+//             medicineModel.setQuantity_M(qu);
+//             
+//             
+//             r[4]=model.getValueAt(j,4);
+//             medicineModel.setEXP(r[4].toString());
+//             Models.MedicineModel.buydata.add(medicineModel);
+//        }
+//       
+//                Object []ro=new Object[5];
+//      
+//         for (int j = 0; j < Models.MedicineModel.buydata.size()/2; j++) {
+//            ro[0]=Models.MedicineModel.buydata.get(j).getParcode()+"";
+//            ro[1]=Models.MedicineModel.buydata.get(j).getMed_Name()+"";
+//            ro[2]=Models.MedicineModel.buydata.get(j).getPrice()+"";
+//           // ro[3]=Models.MedicineModel.buydata.get(j).getRetail()+"";
+//            ro[3]=Models.MedicineModel.buydata.get(j).getQuantity_M()+"";
+//            ro[4]=Models.MedicineModel.buydata.get(j).getEXP()+"";
+//            System.out.println(Arrays.toString(ro));
+//          
+//        }
+//         //System.out.println(Arrays.toString(ro));
+//          //DefaultTableModel model2 = (DefaultTableModel) listofbuy.getModel();
+//           model.setRowCount(0);  
+         DBConnection d=new DBConnection();
+         for (int i = 0; i < toSell.size(); i++) {
+             d.insertSellReview(toSell.get(i).getParcode()
+                     , toSell.get(i).getMed_Name(), toSell.get(i).getPrice()
+                     , toSell.get(i).getRetail() , toSell.get(i).getQuantity_M()
+                     , toSell.get(i).getEmp_ID(),toSell.get(i).getSell_Date(), toSell.get(i).getSell_Time().toString(), toSell.get(i).getID_Med());
              
-             String pr=r[2].toString();
-             Float price=Float.valueOf(pr);
-             medicineModel.setPrice(price);
-             
-             r[3]=model.getValueAt(j,3);
-             String q=r[3].toString();
-             int qu=Integer.parseInt(q);
-             medicineModel.setQuantity_M(qu);
-             
-             
-             r[4]=model.getValueAt(j,4);
-             medicineModel.setEXP(r[4].toString());
-             Models.MedicineModel.buydata.add(medicineModel);
+//             String parcode,String Med_Name,double price
+//            ,double retail,int quantity
+//            ,int Emp_ID,String Sell_Date,String sell_Time,int ID_Med
+            
         }
-       
-                Object []ro=new Object[5];
-      
-         for (int j = 0; j < Models.MedicineModel.buydata.size()/2; j++) {
-            ro[0]=Models.MedicineModel.buydata.get(j).getParcode()+"";
-            ro[1]=Models.MedicineModel.buydata.get(j).getMed_Name()+"";
-            ro[2]=Models.MedicineModel.buydata.get(j).getPrice()+"";
-           // ro[3]=Models.MedicineModel.buydata.get(j).getRetail()+"";
-            ro[3]=Models.MedicineModel.buydata.get(j).getQuantity_M()+"";
-            ro[4]=Models.MedicineModel.buydata.get(j).getEXP()+"";
-            System.out.println(Arrays.toString(ro));
-          
-        }
-         //System.out.println(Arrays.toString(ro));
-          //DefaultTableModel model2 = (DefaultTableModel) listofbuy.getModel();
-           model.setRowCount(0);  
+         toSell.clear();
+         while(model1.getRowCount()!=0)
+         {
+             model1.removeRow(0);
+         }
+         
          
         
     }//GEN-LAST:event_buyprActionPerformed
@@ -419,6 +428,16 @@ public class Sell extends javax.swing.JFrame {
          int qfrombuy=Integer.parseInt(ss);
          String par=model.getValueAt(i,0).toString();
           
+         //
+         for (int j = 0; j < toSell.size(); j++) {
+            if(toSell.get(j).getParcode().equals(listofbuy.getValueAt(i,0).toString()) &&  toSell.get(j).getQuantity_M()==Integer.parseInt(listofbuy.getValueAt(i,3).toString()))
+            {
+                toSell.remove(j);
+                break;
+                
+            }
+        }
+         //
          DBConnection connect=new DBConnection();
           
          connect.select("Medicine","Parcode = "+par+"");
@@ -457,17 +476,17 @@ public class Sell extends javax.swing.JFrame {
           
         }
          
+//         for (int j = 0; j < toSell.size(); j++) {
+//             System.out.println(toSell.get(j).getParcode()+" "+toSell.get(j).getMed_Name()
+//                     +" "+toSell.get(j).getQuantity_M()+" "+toSell.get(j).getPrice()
+//                     +" "+toSell.get(j).getRetail()+" "+toSell.get(j).getSell_Date()
+//                     +" "+toSell.get(j).getSell_Time());
+//        }
          model.removeRow(i);
+         dis();
+        showdata();
+        act();
     }//GEN-LAST:event_removeprActionPerformed
-
-    private void DeleteboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteboardActionPerformed
-           // System.out.println(MedicineModel.buydata.get(1));
-           // DefaultTableModel m=(DefaultTableModel) listofbuy.getModel();
-           dis2();
-           DefaultTableModel model = (DefaultTableModel) listofbuy.getModel();
-           model.setRowCount(0);
-            
-    }//GEN-LAST:event_DeleteboardActionPerformed
 
     private void prquantityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prquantityActionPerformed
          
@@ -495,6 +514,8 @@ public class Sell extends javax.swing.JFrame {
             DefaultTableModel model = (DefaultTableModel) searchtable.getModel();
             mainq=Models.MedicineModel.dataofmedicine.get(pos).getQuantity_M();
             String sq=prquantity.getText();
+            //System.out.println(MedicineModel.dataofmedicine.get(pos).getID_M()+" "+sq);
+            
             ssq=Integer.parseInt(sq);
             result=mainq-ssq;
                      
@@ -506,7 +527,7 @@ public class Sell extends javax.swing.JFrame {
             
             
             
-            DefaultTableModel model1=(DefaultTableModel) listofbuy.getModel();
+            model1=(DefaultTableModel) listofbuy.getModel();
             Object[] r=new Object[5];
             r[0]=par.getText();
             r[1]=prname.getText();
@@ -528,6 +549,33 @@ public class Sell extends javax.swing.JFrame {
             medicineModel.setQuantity_M(qq);
 
             medicineModel.setEXP(prdata.getText());
+            ///
+            //"OPeration_ID","Parcode","Med_Nam","price"
+            //,"Retail","Quantity","Emp_ID","Sell_Date","Sell_Time","ID_Med"
+            Models.ReviewModel m=new ReviewModel();
+            m.setID_Med(MedicineModel.dataofmedicine.get(pos).getID_M());
+            m.setParcode(par.getText());
+            m.setMed_Name(prname.getText());
+            m.setPrice(Double.parseDouble(searchtable.getValueAt(pos, 2).toString())*Integer.parseInt(prquantity.getText()));
+            m.setRetail(Double.parseDouble(searchtable.getValueAt(pos, 3).toString())*Integer.parseInt(prquantity.getText()));
+            m.setQuantity_M(Integer.parseInt(prquantity.getText()));
+            m.setEmp_ID(EmployeeModel.idLog);
+            m.setSell_Date(m.getDatesSell());
+            m.setSell_Time(m.getTimeSell());
+//            System.out.println(m.getParcode()+" "+m.getMed_Name()+" "
+//                    +m.getPrice()+" "+m.getRetail()+" "+m.getQuantity_M()
+//                    +" "+m.getEmp_ID()+" "+m.getSell_Date()
+//                    +" "+m.getSell_Time()+" "+m.getID_Med());
+            
+            toSell.add(m);
+            
+//            for (int j = 0; j < toSell.size(); j++) {
+//             System.out.println(toSell.get(j).getParcode()+" "+toSell.get(j).getMed_Name()
+//                     +" "+toSell.get(j).getQuantity_M()+" "+toSell.get(j).getPrice()
+//                     +" "+toSell.get(j).getRetail()+" "+toSell.get(j).getSell_Date()
+//                     +" "+toSell.get(j).getSell_Time());
+//        }
+            ////
             Models.MedicineModel.buydata.add(medicineModel);
             model1.addRow(r);
         
@@ -593,6 +641,7 @@ public class Sell extends javax.swing.JFrame {
           public void valueChanged(ListSelectionEvent e) {
               if(! model.isSelectionEmpty())
               {
+                  
                    int i=model.getLeadSelectionIndex();
                   
                     String []r=new String[6];
@@ -714,7 +763,6 @@ public class Sell extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Deleteboard;
     private javax.swing.JButton addpr;
     private javax.swing.JButton back;
     private javax.swing.JButton buypr;

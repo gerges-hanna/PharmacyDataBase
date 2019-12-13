@@ -5,7 +5,11 @@
  */
 package Models;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  *
@@ -124,5 +128,22 @@ public class ReviewModel {
         this.ID_Med = ID_Med;
     }
     
+    public String getDatesSell()
+    {
+        SimpleDateFormat s=new SimpleDateFormat("MM-dd-yyyy");
+            Date d=new Date();
+            String Date1=s.format(d);
+       return Date1;
+            
+    }
+    public String getTimeSell()
+    {
+        Calendar cal = Calendar.getInstance();
+        Date date=cal.getTime();
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+        String formattedDate=dateFormat.format(date);
+        return formattedDate;
+        
+    }
     
 }

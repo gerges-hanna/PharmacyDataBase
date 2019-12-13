@@ -162,6 +162,7 @@ public class DBConnection {
                     EmployeeModel e=new EmployeeModel(rs.getInt("ID")
                             ,rs.getString("Email"), rs.getString("Login_Password"));  
                     EmployeeModel.listLogin.add(e);
+                    EmployeeModel.idLog=rs.getInt("ID");
                 }
             }else if(tableName.equalsIgnoreCase("phone"))
             {

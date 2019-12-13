@@ -48,19 +48,19 @@
                       <EmptySpace min="207" pref="207" max="-2" attributes="0"/>
                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="75" pref="75" max="-2" attributes="0"/>
-                      <Component id="oPassword" min="-2" pref="290" max="-2" attributes="0"/>
+                      <Component id="oPassword" min="-2" pref="280" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <EmptySpace min="207" pref="207" max="-2" attributes="0"/>
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="67" pref="67" max="-2" attributes="0"/>
-                      <Component id="nPassword" min="-2" pref="295" max="-2" attributes="0"/>
+                      <Component id="nPassword" min="-2" pref="285" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <EmptySpace min="207" pref="207" max="-2" attributes="0"/>
                       <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="39" pref="39" max="-2" attributes="0"/>
-                      <Component id="cPassword" min="-2" pref="295" max="-2" attributes="0"/>
+                      <Component id="cPassword" min="-2" pref="285" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <EmptySpace min="210" pref="210" max="-2" attributes="0"/>
@@ -81,7 +81,7 @@
                       <Component id="jButton3" min="-2" pref="86" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="402" max="32767" attributes="0"/>
+              <EmptySpace pref="340" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -143,12 +143,12 @@
                   <Component id="jLabel8" min="-2" pref="20" max="-2" attributes="0"/>
                   <Component id="BD" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jButton2" min="-2" max="-2" attributes="0"/>
                   <Component id="jButton3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="76" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -183,8 +183,6 @@
         <Property name="text" type="java.lang.String" value="New PassWord : "/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="nPassword">
-    </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -193,8 +191,6 @@
         <Property name="text" type="java.lang.String" value="Confirm PassWord : "/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="cPassword">
-    </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -202,8 +198,6 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Old PassWord : "/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="oPassword">
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel6">
       <Properties>
@@ -256,6 +250,12 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BDActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JPasswordField" name="cPassword">
+    </Component>
+    <Component class="javax.swing.JPasswordField" name="nPassword">
+    </Component>
+    <Component class="javax.swing.JPasswordField" name="oPassword">
     </Component>
   </SubComponents>
 </Form>

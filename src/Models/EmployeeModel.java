@@ -16,7 +16,7 @@ public class EmployeeModel {
     public static ArrayList<EmployeeModel> listLogin=new ArrayList<EmployeeModel>();
     public static ArrayList<EmployeeModel> listPhone=new ArrayList<EmployeeModel>();
     
-    
+    public static int idLog=-1;
     //Employee
     private int ID_E;
     private String EmName;

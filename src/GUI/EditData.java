@@ -19,20 +19,25 @@ public class EditData extends javax.swing.JFrame {
     public void DataShow()
     {
         
-        d.select("Employee","ID=10");
-        d.select("Login","ID=10");
-        d.select("Phone","ID=10");
+        d.select("Employee","ID="+Models.EmployeeModel.idLog+"");
+        d.select("Login","ID="+Models.EmployeeModel.idLog+"");
+        d.select("Phone","ID="+Models.EmployeeModel.idLog+"");
         email.setText(EmployeeModel.listLogin.get(0).getEmail());
         name.setText(EmployeeModel.listEmployee.get(0).getEmName());
         salary.setText(EmployeeModel.listEmployee.get(0).getSalary()+"");
         BD.setText(EmployeeModel.listEmployee.get(0).getDB());
         salary.setEditable(false);
+        //pho.setText(EmployeeModel.listPhone.get(0).getPhone());
+//        if(EmployeeModel.listPhone.size()>1)
+//        {
+//            pho2.setText(EmployeeModel.listPhone.get(1).getPhone());
+//        }
         
     }
     
     public void Submit()
     {
-        int flag=0,flag2=0;
+        int flag=0,flag2=0,flag3=0;
         if(EmployeeModel.listLogin.get(0).getPassword().equals(oPassword.getText()))
         {
             if(!nPassword.getText().trim().equals("") && !cPassword.getText().trim().equals(""))
@@ -41,8 +46,10 @@ public class EditData extends javax.swing.JFrame {
 
                     if(nPassword.getText().equals(cPassword.getText()))
                      {
-                         flag=d.Update("Employee", "EmName='"+name.getText()+"', DB='"+BD.getText()+"' ", "ID=10");
-                         flag2=d.Update("Login", "Email='"+email.getText()+"',Login_Password='"+nPassword.getText()+"'", "ID=10");
+                         flag=d.Update("Employee", "EmName='"+name.getText()+"', DB='"+BD.getText()+"' ", "ID="+Models.EmployeeModel.idLog+"");
+                         flag2=d.Update("Login", "Email='"+email.getText()+"',Login_Password='"+nPassword.getText()+"'", "ID="+Models.EmployeeModel.idLog+"");
+                         //d.Update("phone", "phoneNumber='"+pho.getText()+"'", "ID="+Models.EmployeeModel.idLog+" AND phoneNumber='"+EmployeeModel.listPhone.get(0).getPhone()+"'");
+                         //d.Update("phone", "phoneNumber='"+pho2.getText()+"'", "ID="+Models.EmployeeModel.idLog+" AND phoneNumber='"+EmployeeModel.listPhone.get(1).getPhone()+"'");
                      } 
                     else{
                         JOptionPane.showMessageDialog(this,"New And Confirm password not the same");
@@ -52,9 +59,11 @@ public class EditData extends javax.swing.JFrame {
             }
             else
             {
-               flag=d.Update("Employee", "EmName='"+name.getText()+"', DB='"+BD.getText()+"' ", "ID=10"); 
-               flag2=d.Update("Login", "Email='"+email.getText()+"'", "ID=10");
-               
+               flag=d.Update("Employee", "EmName='"+name.getText()+"', DB='"+BD.getText()+"' ", "ID="+Models.EmployeeModel.idLog+""); 
+               flag2=d.Update("Login", "Email='"+email.getText()+"'", "ID="+Models.EmployeeModel.idLog+"");
+               //d.Update("phone", "phoneNumber='"+pho.getText()+"'", "ID="+Models.EmployeeModel.idLog+" AND phoneNumber='"+EmployeeModel.listPhone.get(0).getPhone()+"'");
+               //d.Update("phone", "phoneNumber='"+pho2.getText()+"'", "ID="+Models.EmployeeModel.idLog+" AND phoneNumber='"+EmployeeModel.listPhone.get(1).getPhone()+"'");
+
             }
         }else
             {
@@ -70,7 +79,13 @@ public class EditData extends javax.swing.JFrame {
     
     public EditData() {
         initComponents();
-        DataShow();
+        this.setSize(1200, 700);
+        this.setLocationRelativeTo(null);
+        try {
+            DataShow();
+        } catch (Exception e) {
+        }
+        
     }
     
 
@@ -87,11 +102,8 @@ public class EditData extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         email = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        nPassword = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        cPassword = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        oPassword = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         name = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
@@ -100,6 +112,9 @@ public class EditData extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         BD = new javax.swing.JTextField();
+        cPassword = new javax.swing.JPasswordField();
+        nPassword = new javax.swing.JPasswordField();
+        oPassword = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(1200, 700));
@@ -173,17 +188,17 @@ public class EditData extends javax.swing.JFrame {
                         .addGap(207, 207, 207)
                         .addComponent(jLabel4)
                         .addGap(75, 75, 75)
-                        .addComponent(oPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(oPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(207, 207, 207)
                         .addComponent(jLabel2)
                         .addGap(67, 67, 67)
-                        .addComponent(nPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(nPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(207, 207, 207)
                         .addComponent(jLabel3)
                         .addGap(39, 39, 39)
-                        .addComponent(cPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(210, 210, 210)
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -199,7 +214,7 @@ public class EditData extends javax.swing.JFrame {
                         .addComponent(jButton2)
                         .addGap(43, 43, 43)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(402, Short.MAX_VALUE))
+                .addContainerGap(340, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -246,11 +261,11 @@ public class EditData extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(38, 38, 38)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton2)
                     .addComponent(jButton3))
-                .addContainerGap(76, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -258,6 +273,9 @@ public class EditData extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        HomePage p=new HomePage();
+            p.setVisible(true);
+            this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void BDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BDActionPerformed
@@ -266,7 +284,11 @@ public class EditData extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        Submit();
+        try {
+            Submit();
+        } catch (Exception e) {
+        }
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
@@ -298,6 +320,7 @@ public class EditData extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+           
             public void run() {
                 new EditData().setVisible(true);
             }
@@ -306,7 +329,7 @@ public class EditData extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField BD;
-    private javax.swing.JTextField cPassword;
+    private javax.swing.JPasswordField cPassword;
     private javax.swing.JTextField email;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -318,9 +341,9 @@ public class EditData extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JTextField nPassword;
+    private javax.swing.JPasswordField nPassword;
     private javax.swing.JTextField name;
-    private javax.swing.JTextField oPassword;
+    private javax.swing.JPasswordField oPassword;
     private javax.swing.JTextField salary;
     // End of variables declaration//GEN-END:variables
 }
