@@ -75,6 +75,7 @@ public class Sell extends javax.swing.JFrame {
         removepr = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         searchtable = new javax.swing.JTable();
+        DeleteBoard = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -189,15 +190,23 @@ public class Sell extends javax.swing.JFrame {
             }
         ));
         searchtable.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 searchtableAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
         jScrollPane2.setViewportView(searchtable);
+
+        DeleteBoard.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        DeleteBoard.setText("Delete Board");
+        DeleteBoard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeleteBoardActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -231,11 +240,13 @@ public class Sell extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 138, Short.MAX_VALUE)
+                        .addGap(0, 59, Short.MAX_VALUE)
                         .addComponent(buypr)
                         .addGap(61, 61, 61)
                         .addComponent(removepr)
-                        .addGap(385, 385, 385))
+                        .addGap(61, 61, 61)
+                        .addComponent(DeleteBoard)
+                        .addGap(276, 276, 276))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1)
                         .addContainerGap())))
@@ -283,9 +294,11 @@ public class Sell extends javax.swing.JFrame {
                         .addComponent(clearsearch)
                         .addComponent(prsearch)
                         .addComponent(resettextfield))
-                    .addComponent(removepr)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(removepr)
+                        .addComponent(DeleteBoard))
                     .addComponent(buypr))
-                .addGap(18, 18, 18)
+                .addGap(47, 47, 47)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -491,6 +504,78 @@ public class Sell extends javax.swing.JFrame {
     private void prquantityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prquantityActionPerformed
          
     }//GEN-LAST:event_prquantityActionPerformed
+
+    private void DeleteBoardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteBoardActionPerformed
+           dis2();
+           DefaultTableModel model = (DefaultTableModel) listofbuy.getModel();
+           int i=listofbuy.getRowCount();
+           //System.out.println(i);
+           
+         if (i>0) {
+         for (int k = 0; k <i/2;) {
+                //int i=listofbuy.getSelectedRow();
+         //DefaultTableModel model = (DefaultTableModel) listofbuy.getModel();
+         String ss=model.getValueAt(k,3).toString();
+         int qfrombuy=Integer.parseInt(ss);
+         String par=model.getValueAt(k,0).toString();
+          
+         DBConnection connect=new DBConnection();
+          
+         connect.select("Medicine","Parcode = "+par+"");
+         
+         Object []r=new Object[6];
+      
+         for (int j = 0; j < Models.MedicineModel.dataofmedicine.size(); j++) {
+            r[0]=Models.MedicineModel.dataofmedicine.get(j).getParcode()+"";
+            r[1]=Models.MedicineModel.dataofmedicine.get(j).getMed_Name()+"";
+            r[2]=Models.MedicineModel.dataofmedicine.get(j).getPrice()+"";
+            r[3]=Models.MedicineModel.dataofmedicine.get(j).getRetail()+"";
+            r[4]=Models.MedicineModel.dataofmedicine.get(j).getQuantity_M()+"";
+            r[5]=Models.MedicineModel.dataofmedicine.get(j).getEXP();
+          
+        }
+            
+         String qfrommain=r[4].toString();
+         int quant=Integer.parseInt(qfrommain);
+         int endgame=quant+qfrombuy;
+          
+         connect.Update("Medicine","Quantity = "+endgame+"","Parcode = "+par+"");
+         Object[]ro=new Object[5];
+         for (int j = 0; j < Models.MedicineModel.buydata.size()/2; j++) {
+            ro[0]=Models.MedicineModel.buydata.get(j).getParcode()+"";
+            ro[1]=Models.MedicineModel.buydata.get(j).getMed_Name()+"";
+            ro[2]=Models.MedicineModel.buydata.get(j).getPrice()+"";
+           // ro[3]=Models.MedicineModel.buydata.get(j).getRetail()+"";
+            ro[3]=Models.MedicineModel.buydata.get(j).getQuantity_M()+"";
+            ro[4]=Models.MedicineModel.buydata.get(j).getEXP()+"";
+            //System.out.println(Arrays.toString(ro));
+            if(ro[0].equals(par))
+            {
+                MedicineModel.buydata.remove(ro);
+                break;
+            }
+          
+        }
+         
+         model.removeRow(k);
+       
+        dis();
+        showdata();
+        act();
+       
+       prname.setText(" ");
+       proprice.setText(" ");
+       prquantity.setText(" ");
+       prdata.setText(" ");   
+        }
+        
+        }
+         else
+         {
+             JOptionPane.showInternalMessageDialog(null,"no thing");
+         }
+        
+    }//GEN-LAST:event_DeleteBoardActionPerformed
     private  void qm()
     {
         int q=0;
@@ -768,6 +853,7 @@ public class Sell extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton DeleteBoard;
     private javax.swing.JButton addpr;
     private javax.swing.JButton back;
     private javax.swing.JButton buypr;
