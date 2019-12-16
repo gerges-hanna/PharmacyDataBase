@@ -517,22 +517,22 @@ public class Sell extends javax.swing.JFrame {
     }//GEN-LAST:event_prquantityActionPerformed
 
     private void DeleteBoardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteBoardActionPerformed
-           dis2();
+                  dis2();
            DefaultTableModel model = (DefaultTableModel) listofbuy.getModel();
            int i=listofbuy.getRowCount();
-           //System.out.println(i);
-           
+    
+        try {
+        
          if (i>0) {
-         for (int k = 0; k <i/2;) {
-                //int i=listofbuy.getSelectedRow();
-         //DefaultTableModel model = (DefaultTableModel) listofbuy.getModel();
+         for (int k = 0; k <i;) {
+               
          String ss=model.getValueAt(k,3).toString();
          int qfrombuy=Integer.parseInt(ss);
-         String par=model.getValueAt(k,0).toString();
-          
+         String id =model.getValueAt(k,5).toString();
+         
          DBConnection connect=new DBConnection();
           
-         connect.select("Medicine","ID = "+listofbuy.getValueAt(i, 5)+"");
+         connect.select("Medicine","ID = "+id+"");
          
          Object []r=new Object[7];
       
@@ -551,8 +551,8 @@ public class Sell extends javax.swing.JFrame {
          int quant=Integer.parseInt(qfrommain);
          int endgame=quant+qfrombuy;
           
-         connect.Update("Medicine","Quantity = "+endgame+"","ID = "+listofbuy.getValueAt(i, 5)+"");
-         Object[]ro=new Object[6];
+         connect.Update("Medicine","Quantity = "+endgame+"","ID = "+id+"");
+         /*Object[]ro=new Object[6];
          for (int j = 0; j < Models.MedicineModel.buydata.size()/2; j++) {
             ro[0]=Models.MedicineModel.buydata.get(j).getParcode()+"";
             ro[1]=Models.MedicineModel.buydata.get(j).getMed_Name()+"";
@@ -562,15 +562,15 @@ public class Sell extends javax.swing.JFrame {
             ro[4]=Models.MedicineModel.buydata.get(j).getEXP()+"";
             ro[5]=Models.MedicineModel.buydata.get(j).getID_M()+"";
             //System.out.println(Arrays.toString(ro));
-            if(ro[5].equals(listofbuy.getValueAt(i,5)))
+            if(ro[5].equals(id))
             {
                 MedicineModel.buydata.remove(ro);
                 break;
             }
           
-        }
+        }*/
          
-         model.removeRow(k);
+        model.removeRow(k);
        
         dis();
         showdata();
@@ -587,6 +587,12 @@ public class Sell extends javax.swing.JFrame {
          {
              JOptionPane.showMessageDialog(this,"No Thing To Delete");
          }
+         } catch (Exception e) {
+            System.out.print(" ");
+         }
+        
+        
+    
         
     }//GEN-LAST:event_DeleteBoardActionPerformed
 
@@ -609,9 +615,9 @@ public class Sell extends javax.swing.JFrame {
         String s=prquantity.getText();
         q=Integer.parseInt(s);       
         
-        if(q>mainq){
-              JOptionPane.showMessageDialog(this,"Sorry We Don't Have The Quantity You Want");
- 
+        if(mainq==0)
+        {
+            JOptionPane.showMessageDialog(this,"َSold out");
         }
         else if(mainq>0){
                 
@@ -690,11 +696,14 @@ public class Sell extends javax.swing.JFrame {
             ////
             Models.MedicineModel.buydata.add(medicineModel);
             model1.addRow(r);
-        
-        }else
-        {
-            JOptionPane.showMessageDialog(this,"َSold out");
         }
+        
+       else if(q>mainq){
+              JOptionPane.showInternalMessageDialog(null,"Sorry We Don't Have The Quantity You Want");
+ 
+        }
+        else
+            JOptionPane.showMessageDialog(this,"Error");
 
     }
     
