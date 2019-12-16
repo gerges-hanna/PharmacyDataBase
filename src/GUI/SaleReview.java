@@ -17,12 +17,14 @@ public class SaleReview extends javax.swing.JFrame {
     /**
      * Creates new form SaleReview
      */
+    DefaultTableModel model;
     private void TableShow()
     {
+        Models.ReviewModel.listReview.clear();
         DBConnection connect=new DBConnection();
         connect.select("SellReview","");
         String [] column={"OPeration_ID","Parcode","Med_Nam","price","Retail","Quantity","Emp_ID","Sell_Date","Sell_Time","ID_Med"};
-       DefaultTableModel model=new DefaultTableModel();
+        model=new DefaultTableModel();
        model.addColumn(column[0]);
        model.addColumn(column[1]);
        model.addColumn(column[2]);
@@ -57,11 +59,42 @@ public class SaleReview extends javax.swing.JFrame {
         
     }
     
+    private void calculatePrice()
+    {
+        double price=0.0;
+        for (int i = 0; i < tab.getRowCount(); i++) {
+            price=price+Double.parseDouble(tab.getValueAt(i, 3).toString());    
+        }
+        lblprice.setText(price+"");
+    }
+    
+    private void calculateRetail()
+    {
+        double price=0.0;
+        for (int i = 0; i < tab.getRowCount(); i++) {
+            price=price+Double.parseDouble(tab.getValueAt(i, 4).toString());    
+        }
+        
+        lblRetail.setText((Double.parseDouble(lblprice.getText())-price)+"");
+    }
+    
+    private void search(int column)
+    {
+        for (int i = tab.getRowCount()-1; i >=0; i--) {
+                if(!tab.getValueAt(i, column).toString().equals(search.getText()))
+                {
+                   model.removeRow(i);
+                }
+            }
+    }
+    
     public SaleReview() {
         initComponents();
         this.setSize(1200, 700);
         this.setLocationRelativeTo(null);
         TableShow();
+        calculatePrice();
+        calculateRetail();
     }
 
     /**
@@ -75,16 +108,16 @@ public class SaleReview extends javax.swing.JFrame {
 
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
-        jTextField1 = new javax.swing.JTextField();
+        cb = new javax.swing.JComboBox();
+        search = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tab = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        lblprice = new javax.swing.JLabel();
+        lblRetail = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -101,10 +134,15 @@ public class SaleReview extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Search:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Operation_ID", "Parcode", "Med_Name", "Price", "Retail", "Quantity", "Emp_ID", "Sell_Date", "Sell_Time", "ID_Med" }));
+        cb.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Operation_ID", "Parcode", "Med_Name", "Price", "Retail", "Quantity", "Emp_ID", "Sell_Date", "Sell_Time", "ID_Med" }));
 
         jButton2.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jButton2.setText("Search");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         tab.setBorder(new javax.swing.border.MatteBorder(null));
         tab.setModel(new javax.swing.table.DefaultTableModel(
@@ -125,70 +163,82 @@ public class SaleReview extends javax.swing.JFrame {
 
         jButton3.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jButton3.setText("Reset");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        jLabel3.setText("Total Profit:");
+        jLabel3.setText("Total Earn:");
 
-        jLabel4.setText("0");
+        lblprice.setText("0");
 
-        jLabel5.setText("0");
+        lblRetail.setText("0");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(229, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 456, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel4)
-                        .addGap(99, 99, 99)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(205, 205, 205))
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1))
-                .addContainerGap())
+                .addGap(12, 12, 12)
+                .addComponent(jButton1))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(229, 229, 229)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
+                .addComponent(search, javax.swing.GroupLayout.PREFERRED_SIZE, 456, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(cb, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton2))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1176, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(83, 83, 83)
+                .addComponent(jLabel2)
+                .addGap(12, 12, 12)
+                .addComponent(lblprice, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(52, 52, 52)
+                .addComponent(jLabel3)
+                .addGap(12, 12, 12)
+                .addComponent(lblRetail, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(92, 92, 92)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(13, 13, 13)
                 .addComponent(jButton1)
                 .addGap(39, 39, 39)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(search, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(cb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jButton2))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(47, 47, 47)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addComponent(jButton3)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(7, 7, 7)
+                        .addComponent(lblprice))
                     .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5))
-                .addContainerGap(101, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(7, 7, 7)
+                        .addComponent(lblRetail))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(jButton3))))
         );
 
         pack();
@@ -200,6 +250,53 @@ public class SaleReview extends javax.swing.JFrame {
             p.setVisible(true);
             this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        TableShow();
+        search.setText("");
+        calculatePrice();
+        calculateRetail(); 
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        TableShow();
+//Operation_ID, Parcode, Med_Name, Price, Retail, Quantity, Emp_ID, Sell_Date, Sell_Time, ID_Med
+        if(cb.getSelectedItem().equals("Operation_ID"))
+        {
+            search(0);
+        }else if(cb.getSelectedItem().equals("Parcode"))
+        {
+            search(1);
+        }else if(cb.getSelectedItem().equals("Med_Name"))
+        {
+            search(2);
+        }else if(cb.getSelectedItem().equals("Price"))
+        {
+            search(3);
+        }else if(cb.getSelectedItem().equals("Retail"))
+        {
+            search(4);
+        }else if(cb.getSelectedItem().equals("Quantity"))
+        {
+           search(5);
+        }else if(cb.getSelectedItem().equals("Emp_ID"))
+        {
+            search(6);
+        }else if(cb.getSelectedItem().equals("Sell_Date"))
+        {
+            search(7);
+        }else if(cb.getSelectedItem().equals("Sell_Time"))
+        {
+            search(8);
+        }else if(cb.getSelectedItem().equals("ID_Med"))
+        {
+            search(9);
+        }
+       calculatePrice();
+        calculateRetail(); 
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -237,17 +334,17 @@ public class SaleReview extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox cb;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel lblRetail;
+    private javax.swing.JLabel lblprice;
+    private javax.swing.JTextField search;
     private javax.swing.JTable tab;
     // End of variables declaration//GEN-END:variables
 }

@@ -36,12 +36,16 @@ import javax.swing.table.TableModel;
 public class Sell extends javax.swing.JFrame {
     private ArrayList<Models.ReviewModel> toSell=new ArrayList<Models.ReviewModel>();
     DefaultTableModel model1;
+    
     /**
      * Creates new form Sell
      */
    
     public Sell() {
         initComponents();
+        toSell.clear();
+        MedicineModel.dataofmedicine.clear();
+        MedicineModel.buydata.clear();
          this.setSize(1200, 700);
         this.setLocationRelativeTo(null);
         
@@ -164,7 +168,7 @@ public class Sell extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Parcode", "Med_name", "price", "Quantity", "EXP"
+                "Parcode", "Med_Name", "Price", "Quantity", "EXP", "ID"
             }
         ));
         jScrollPane1.setViewportView(listofbuy);
@@ -460,7 +464,7 @@ public class Sell extends javax.swing.JFrame {
          //
          DBConnection connect=new DBConnection();
           
-         connect.select("Medicine","Parcode = "+par+"");
+         connect.select("Medicine","ID = "+listofbuy.getValueAt(i,5)+"");
          
          Object []r=new Object[6];
       
@@ -477,8 +481,8 @@ public class Sell extends javax.swing.JFrame {
          String qfrommain=r[4].toString();
          int quant=Integer.parseInt(qfrommain);
          int endgame=quant+qfrombuy;
-          
-         connect.Update("Medicine","Quantity = "+endgame+"","Parcode = "+par+"");
+          int pos=listofbuy.getSelectedRow();
+         connect.Update("Medicine","Quantity = "+endgame+"","ID = "+listofbuy.getValueAt(pos,5).toString()+"");
          Object[]ro=new Object[5];
          for (int j = 0; j < Models.MedicineModel.buydata.size()/2; j++) {
             ro[0]=Models.MedicineModel.buydata.get(j).getParcode()+"";
@@ -528,9 +532,9 @@ public class Sell extends javax.swing.JFrame {
           
          DBConnection connect=new DBConnection();
           
-         connect.select("Medicine","Parcode = "+par+"");
+         connect.select("Medicine","ID = "+listofbuy.getValueAt(i, 5)+"");
          
-         Object []r=new Object[6];
+         Object []r=new Object[7];
       
          for (int j = 0; j < Models.MedicineModel.dataofmedicine.size(); j++) {
             r[0]=Models.MedicineModel.dataofmedicine.get(j).getParcode()+"";
@@ -539,6 +543,7 @@ public class Sell extends javax.swing.JFrame {
             r[3]=Models.MedicineModel.dataofmedicine.get(j).getRetail()+"";
             r[4]=Models.MedicineModel.dataofmedicine.get(j).getQuantity_M()+"";
             r[5]=Models.MedicineModel.dataofmedicine.get(j).getEXP();
+            r[6]=Models.MedicineModel.dataofmedicine.get(j).getID_M()+"";
           
         }
             
@@ -546,8 +551,8 @@ public class Sell extends javax.swing.JFrame {
          int quant=Integer.parseInt(qfrommain);
          int endgame=quant+qfrombuy;
           
-         connect.Update("Medicine","Quantity = "+endgame+"","Parcode = "+par+"");
-         Object[]ro=new Object[5];
+         connect.Update("Medicine","Quantity = "+endgame+"","ID = "+listofbuy.getValueAt(i, 5)+"");
+         Object[]ro=new Object[6];
          for (int j = 0; j < Models.MedicineModel.buydata.size()/2; j++) {
             ro[0]=Models.MedicineModel.buydata.get(j).getParcode()+"";
             ro[1]=Models.MedicineModel.buydata.get(j).getMed_Name()+"";
@@ -555,8 +560,9 @@ public class Sell extends javax.swing.JFrame {
            // ro[3]=Models.MedicineModel.buydata.get(j).getRetail()+"";
             ro[3]=Models.MedicineModel.buydata.get(j).getQuantity_M()+"";
             ro[4]=Models.MedicineModel.buydata.get(j).getEXP()+"";
+            ro[5]=Models.MedicineModel.buydata.get(j).getID_M()+"";
             //System.out.println(Arrays.toString(ro));
-            if(ro[0].equals(par))
+            if(ro[5].equals(listofbuy.getValueAt(i,5)))
             {
                 MedicineModel.buydata.remove(ro);
                 break;
@@ -625,19 +631,21 @@ public class Sell extends javax.swing.JFrame {
                      
             DBConnection connection=new DBConnection();                     
             String endgame=Integer.toString(result);
-            connection.Update("Medicine","Quantity ="+endgame+"","Parcode ="+par.getText()+"");
+            connection.Update("Medicine","Quantity ="+endgame+"","ID="+searchtable.getValueAt(pos,6)+"");
             model.setValueAt(endgame, pos, 4);
             
             
             
             
             model1=(DefaultTableModel) listofbuy.getModel();
-            Object[] r=new Object[5];
+            Object[] r=new Object[6];
             r[0]=par.getText();
             r[1]=prname.getText();
             r[3]=prquantity.getText();
             r[2]=proprice.getText();
             r[4]=prdata.getText();
+            r[5]=searchtable.getValueAt(pos, 6);
+            
 
             //String Parcode, String Med_Name, double price, double Retail, int Quantity_M, String EXP
             MedicineModel medicineModel=new MedicineModel();
@@ -712,7 +720,7 @@ public class Sell extends javax.swing.JFrame {
        DBConnection connect=new DBConnection();
       
         connect.select("Medicine","");
-        String [] c={"Parcode","Med_Nam","price","Retail","Quantity","EXP"};
+        String [] c={"Parcode","Med_Nam","price","Retail","Quantity","EXP","ID"};
         DefaultTableModel model=new DefaultTableModel();
         model.addColumn(c[0]);
         model.addColumn(c[1]);
@@ -720,8 +728,9 @@ public class Sell extends javax.swing.JFrame {
         model.addColumn(c[3]);
         model.addColumn(c[4]);
         model.addColumn(c[5]);
+        model.addColumn(c[6]);
         
-         String []r=new String[6];
+         String []r=new String[7];
       
         for (int i = 0; i < Models.MedicineModel.dataofmedicine.size(); i++) {
             r[0]=Models.MedicineModel.dataofmedicine.get(i).getParcode()+"";
@@ -729,7 +738,9 @@ public class Sell extends javax.swing.JFrame {
             r[2]=Models.MedicineModel.dataofmedicine.get(i).getPrice()+"";
             r[3]=Models.MedicineModel.dataofmedicine.get(i).getRetail()+"";
             r[4]=Models.MedicineModel.dataofmedicine.get(i).getQuantity_M()+"";
+            
             r[5]=Models.MedicineModel.dataofmedicine.get(i).getEXP();
+            r[6]=Models.MedicineModel.dataofmedicine.get(i).getID_M()+"";
             model.addRow(r);
         }
 
@@ -748,13 +759,14 @@ public class Sell extends javax.swing.JFrame {
                   
                    int i=model.getLeadSelectionIndex();
                   
-                    String []r=new String[6];
+                    String []r=new String[7];
                     r[0]=Models.MedicineModel.dataofmedicine.get(i).getParcode()+"";
                     r[1]=Models.MedicineModel.dataofmedicine.get(i).getMed_Name()+"";
                     r[2]=Models.MedicineModel.dataofmedicine.get(i).getPrice()+"";
                     r[3]=Models.MedicineModel.dataofmedicine.get(i).getRetail()+"";
                     r[4]=Models.MedicineModel.dataofmedicine.get(i).getQuantity_M()+"";
                     r[5]=Models.MedicineModel.dataofmedicine.get(i).getEXP();
+                    //r[6]=Models.MedicineModel.dataofmedicine.get(i).getID_M()+"";
                     par.setText(r[0]);
                     prname.setText(r[1]);
                     proprice.setText(r[2]);
